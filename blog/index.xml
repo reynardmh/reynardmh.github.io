@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on hilman.io</title>
-    <link>http://localhost:1313/blog/</link>
+    <link>http://hilman.io/blog/</link>
     <description>Recent content in Blogs on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
     <lastBuildDate>Sun, 13 Sep 2015 23:41:00 -0400</lastBuildDate>
-    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://hilman.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Comparing ancestry and closure_tree for your nested data structure</title>
-      <link>http://localhost:1313/blog/2015/09/comparing-ancestry-and-closure_tree/</link>
+      <link>http://hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/</link>
       <pubDate>Sun, 13 Sep 2015 23:41:00 -0400</pubDate>
       
-      <guid>http://localhost:1313/blog/2015/09/comparing-ancestry-and-closure_tree/</guid>
+      <guid>http://hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/</guid>
       <description>
 
 &lt;p&gt;When it comes to implementing &lt;a href=&#34;https://www.ruby-toolbox.com/categories/Active_Record_Nesting&#34; target=&#34;_blank&#34;&gt;ActiveRecord nesting&lt;/a&gt;, there are a few popular implementations. In this post I will look closer at how &lt;a href=&#34;https://github.com/stefankroes/ancestry&#34; target=&#34;_blank&#34;&gt;Ancestry&lt;/a&gt; and &lt;a href=&#34;http://mceachen.github.io/closure_tree/&#34; target=&#34;_blank&#34;&gt;Closure tree&lt;/a&gt; work and what the pros and cons are.&lt;/p&gt;
@@ -171,10 +171,10 @@ closure_tree - move node  1.260000   0.180000   1.440000 (  2.733766)
     
     <item>
       <title>What you need to know about gitignore pattern</title>
-      <link>http://localhost:1313/blog/2015/09/what-you-need-to-know-about-gitignore/</link>
+      <link>http://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</link>
       <pubDate>Mon, 07 Sep 2015 20:15:26 -0400</pubDate>
       
-      <guid>http://localhost:1313/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
+      <guid>http://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
       <description>
 
 &lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that I wasn&amp;rsquo;t aware of.&lt;/p&gt;
