@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.14" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> What you need to know about gitignore pattern &middot; hilman.io </title>
+
+  
+  <link rel="stylesheet" href="http://localhost:1313//css/poole.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
+</head>
+
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/"><h1>hilman.io</h1></a>
+      <p>
+       Blog about coding and being human 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://localhost:1313/">Home</a> </li>
+      
+        <li><a href="http://localhost:1313/post/"> Archives </a></li>
+      
+    </ul>
+
+    <small>
+      &copy; 2015. Reynard Hilman
+    </small>
+  </div>
+</div>
+
+
+    <div class="content container">
+<div class="post">
+  <h1>What you need to know about gitignore pattern</h1>
+  <span class="post-date">Mon, Sep 7, 2015</span>
+      
+
+<p>After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that I wasn&rsquo;t aware of.</p>
+
+<h2 id="the-problem-i-ran-into:c5cbae0bff61d1461796445415115d58">The problem I ran into</h2>
+
+<p>I had just moved a directory to another directory.</p>
+
+<pre><code>/some/path/doc         # old location
+/some/path/nested/doc  # new location
+</code></pre>
+
+<p>Git detects that I’m deleting a bunch of files, but it doesn’t show that I’m adding any new files. I thought git just doesn’t immediately detect the new files. So I committed the changes hoping that now git will detect the new files. It still doesn’t. I wonder what happens if I just move the directory back to its original location. Technically it should revert my changes, right? But moving it back doesn’t help either, git still does not detect that there is any changes in my repository.</p>
+
+<p>I start to suspect gitignore settings. I noticed that at some point someone added this line in gitignore</p>
+
+<pre><code>doc
+tmp
+</code></pre>
+
+<p>That looks suspicious. I thought that just means to ignore any directory named &ldquo;doc&rdquo; in the root of the project. But maybe I&rsquo;m wrong. So I commented out that line to see if it did anything. And it did detect that there were changes to be committed.</p>
+
+<p>When you specify just a word without leading or trailing slash, it will match any directory or files with that name anywhere in your project. So having “doc” in .gitignore, means:</p>
+
+<pre><code># .gitignore
+doc
+</code></pre>
+
+<p>will ignore all of these:</p>
+
+<pre><code>/doc # directory
+/doc # file
+/some/path/doc # directory
+/some/path/doc # file
+</code></pre>
+
+<h2 id="what-if-you-just-want-to-ignore-the-directory-at-the-root-level:c5cbae0bff61d1461796445415115d58">What if you just want to ignore the directory at the root level?</h2>
+
+<p>The correct syntax for that is to put leading and trailing slash:</p>
+
+<pre><code># .gitignore
+/doc/
+</code></pre>
+
+<pre><code># will ignore
+/doc # directory
+
+# will NOT ignore
+/doc         # file
+/some/doc    # directory
+/another/doc # file
+</code></pre>
+
+<p>Why the need for trailing slash? If you just put leading slash, it will still ignore the doc directory at the root level, but it will also ignore a file named “doc” at the root level, if you have a file instead of a directory named “doc” at the root level.</p>
+
+<pre><code># .gitignore
+/doc
+</code></pre>
+
+<p>will ignore</p>
+
+<pre><code>/doc # directory
+/doc # file
+</code></pre>
+
+<p>So what if we only include trailing slash?</p>
+
+<pre><code># .gitignore
+doc/
+</code></pre>
+
+<p>it will ignore all directory named “doc” anywhere in your project, but it will not ignore any files named “doc”</p>
+
+<pre><code># will ignore:
+/doc # directory
+/some/path/doc # directory
+
+# will NOT ignore:
+/another/path/doc # file
+</code></pre>
+
+<h2 id="summary:c5cbae0bff61d1461796445415115d58">Summary</h2>
+
+<ul>
+<li>To ignore just directories, add a slash at the end of the pattern. Otherwise it will ignore both files and directories.</li>
+<li>To ignore just files/directories at the root, add a slash at the beginning of the pattern. Otherwise it will ignore files/directories anywhere in your project.</li>
+</ul>
+
+<p>If you&rsquo;re curious, check out a more detailed documentation about <a href="http://git-scm.com/docs/gitignore">gitignore patterns</a>. These 2 basic patterns seem like a must know for most git users, so you don&rsquo;t accidentally ignore more stuff than you intended to.</p>
+
+</div>
+</div>
+
+  <script data-no-instant>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
+</html>
