@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on hilman.io</title>
+    <link>http://localhost:1313/blog/</link>
+    <description>Recent content in Blogs on hilman.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Reynard Hilman</copyright>
+    <lastBuildDate>Sun, 13 Sep 2015 23:41:00 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Comparing ancestry and closure_tree for your nested data structure</title>
+      <link>http://localhost:1313/blog/2015/09/comparing-ancestry-and-closure_tree/</link>
+      <pubDate>Sun, 13 Sep 2015 23:41:00 -0400</pubDate>
+      
+      <guid>http://localhost:1313/blog/2015/09/comparing-ancestry-and-closure_tree/</guid>
+      <description>
+
+&lt;p&gt;When it comes to implementing &lt;a href=&#34;https://www.ruby-toolbox.com/categories/Active_Record_Nesting&#34; target=&#34;_blank&#34;&gt;ActiveRecord nesting&lt;/a&gt;, there are a few popular implementations. In this post I will look closer at how &lt;a href=&#34;https://github.com/stefankroes/ancestry&#34; target=&#34;_blank&#34;&gt;Ancestry&lt;/a&gt; and &lt;a href=&#34;http://mceachen.github.io/closure_tree/&#34; target=&#34;_blank&#34;&gt;Closure tree&lt;/a&gt; work and what the pros and cons are.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-ancestry-works:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;How ancestry works&lt;/h2&gt;
+
+&lt;p&gt;Ancestry works by adding one column (by default named &amp;ldquo;ancestry&amp;rdquo;) that replaces the parent_id. Instead of just storing the parent_id, ancestry stores the whole ancestry path to the parent_id.&lt;/p&gt;
+
+&lt;p&gt;For example if you have this tree structure.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(id: 1) Page 1
+(id: 2)   Page 1.1
+(id: 3)   Page 1.2
+(id: 4)     Page 1.2.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here is how it looks in the database&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+----+------------+----------+
+| id | name       | ancestry |
++----+------------+----------+
+|  1 | Page 1     | NULL     |
+|  2 | Page 1.1   | 1        |
+|  3 | Page 1.2   | 1        |
+|  4 | Page 1.2.1 | 1/3      |
++----+------------+----------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This way you can always find the children of a node by selecting &lt;code&gt;where ancestry = &amp;quot;{self.ancestry}/{self.id}&amp;quot;&lt;/code&gt;. And you can find all the descendants of a node by selecting &lt;code&gt;where
+(ancestry = &amp;quot;{self.ancestry}/{self.id}&amp;quot; OR ancestry LIKE &amp;quot;{self.ancestry}/{self.id}/%&amp;quot;)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;To select all ancestors of a node, you just select &lt;code&gt;where id IN (ancestry_ids)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;how-closure-tree-works:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;How closure_tree works&lt;/h2&gt;
+
+&lt;p&gt;Closure tree is a little more complicated than Ancestry. In addition to using the regular parent_id on your model, it also uses a separate hierarchy table.&lt;/p&gt;
+
+&lt;p&gt;So if you have a Page model, you also need to have page_hierarchies table that has the following columns: ancestor_id, descendant_id, and generations.&lt;/p&gt;
+
+&lt;p&gt;What are all these columns for? Let&amp;rsquo;s figure that out by observing how it populates the table. Using the same structure&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(id: 1) Page 1
+(id: 2)   Page 1.1
+(id: 3)   Page 1.2
+(id: 4)     Page 1.2.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;closure_tree created the following rows in the hierarchy table:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+-------------+---------------+-------------+
+| ancestor_id | descendant_id | generations |
++-------------+---------------+-------------+
+|           1 |             1 |           0 |
+|           1 |             2 |           1 |
+|           1 |             3 |           1 |
+|           1 |             4 |           2 |
+|           2 |             2 |           0 |
+|           3 |             3 |           0 |
+|           3 |             4 |           1 |
+|           4 |             4 |           0 |
++-------------+---------------+-------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It basically creates a single row for every descendant an ancestor has, and another row where the ancestor_id = descendant_id.&lt;/p&gt;
+
+&lt;p&gt;Because &amp;ldquo;Page 1&amp;rdquo; is the root ancestor, there is one row for itself and 3 more rows for each node under &amp;ldquo;Page 1&amp;rdquo;. This way you can find all the descendants by selecting where &lt;code&gt;ancestor_id = self.id&lt;/code&gt; and joining with the main node table so you can do this in 1 select query. In the same way, you can find all the ancestor by selecting &lt;code&gt;where descendant_id = self.id&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The generations column indicates how many generations the relation between the ancestor_id and the descendant_id. For example (id: 1) is the direct parent of (id: 2), therefore their relation has generations:1. All rows where ancestor_id = descendant_id has generations:0.&lt;/p&gt;
+
+&lt;h2 id=&#34;benchmark:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Benchmark&lt;/h2&gt;
+
+&lt;h3 id=&#34;write:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Write&lt;/h3&gt;
+
+&lt;p&gt;Populating deeply nested data (25 level deep)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Ancestry: 0.083076
+Closure tree: 0.215164
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Populating shallow nested data&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Ancestry: 0.192071
+Closure tree: 0.490023
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So in general closure_tree is more than 2 times slower at inserting data, because it has to do a lot more inserts to the hierarchy table.&lt;/p&gt;
+
+&lt;h3 id=&#34;read:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Read&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s see how they do for selecting the ancestors and descendants&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;                              user     system      total        real
+ancestry.ancestors        0.000000   0.000000   0.000000 (  0.009915)
+closure_tree.ancestors    0.020000   0.010000   0.030000 (  0.030023)
+
+                              user     system      total        real
+ancestry.descendants      0.010000   0.000000   0.010000 (  0.014332)
+closure_tree.descendants  0.020000   0.010000   0.030000 (  0.021242)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The select benchmark might be really dependent on db caching. Assuming the same db and caching mechanism, ancestry wins with a pretty good margin.&lt;/p&gt;
+
+&lt;h3 id=&#34;update:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Update&lt;/h3&gt;
+
+&lt;p&gt;Because each node stores information about its ancestors, moving a node means we need to update all the descendants to reflect the new ancestry tree.&lt;/p&gt;
+
+&lt;p&gt;The following benchmark move a root node with 14 nodes under it, and then move it back to root.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;                              user     system      total        real
+ancestry - move node      0.380000   0.130000   0.510000 (  0.639941)
+closure_tree - move node  0.780000   0.150000   0.930000 (  1.802662)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Moving a root node with 25 nodes under it, and then move it back to root.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;                              user     system      total        real
+ancestry - move node      0.510000   0.170000   0.680000 (  0.799853)
+closure_tree - move node  1.260000   0.180000   1.440000 (  2.733766)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;summary:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Summary&lt;/h2&gt;
+
+&lt;h3 id=&#34;ancestry-pros:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Ancestry Pros:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Simpler data structure to understand&lt;/li&gt;
+&lt;li&gt;In general faster (inserting, selecting and moving nodes around)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;ancestry-cons:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Ancestry Cons:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Because the ancestry column is a varchar(255), there is a limitation on the tree depth (depending on what type of primary key you use). An INT in MySql has a max value of 2147483647 (10 digits), which means that you are limited to &lt;sup&gt;255&lt;/sup&gt;&amp;frasl;&lt;sub&gt;11&lt;/sub&gt; = 23 ancestors. You have to make sure that your application does not allow creating more nested data than this limit.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;closure-tree-pros:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;closure_tree Pros:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If you have a huge existing nested data (using parent_id), you don&amp;rsquo;t have to run migration to add a new column (which could take a long time).&lt;/li&gt;
+&lt;li&gt;Unlimited level of nesting&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;closure-tree-cons:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;closure_tree Cons:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Slower&lt;/li&gt;
+&lt;li&gt;Not ideal if you need to move nodes often&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The source code for this &lt;a href=&#34;https://github.com/reynardmh/nested_model_benchmark&#34;&gt;benchmark&lt;/a&gt; is available on github.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
