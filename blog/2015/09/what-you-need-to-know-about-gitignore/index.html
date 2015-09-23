@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="http://hilman.io//css/poole.css">
   <link rel="stylesheet" href="http://hilman.io//css/syntax.css">
   <link rel="stylesheet" href="http://hilman.io//css/hyde.css">
+  <link rel="stylesheet" href="http://hilman.io//css/site.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
@@ -44,19 +45,19 @@
     </ul>
 
     <small>
-      &copy; 2015. Reynard Hilman
+      &copy; 2015 Reynard Hilman
     </small>
   </div>
 </div>
 
 
-    <div class="content container">
-<div class="post">
-  <h1>What you need to know about gitignore pattern</h1>
-  <span class="post-date">Mon, Sep 7, 2015</span>
-      
+<div class="content container">
+  <div class="post">
+    <h1>What you need to know about gitignore pattern</h1>
+    <span class="post-date">Mon, Sep 7, 2015</span>
+        
 
-<p>After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that I wasn&rsquo;t aware of.</p>
+<p>After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.</p>
 
 <h2 id="the-problem-i-ran-into:c5cbae0bff61d1461796445415115d58">The problem I ran into</h2>
 
@@ -144,8 +145,20 @@ doc/
 
 <p>If you&rsquo;re curious, check out a more detailed documentation about <a href="http://git-scm.com/docs/gitignore">gitignore patterns</a>. These 2 basic patterns seem like a must know for most git users, so you don&rsquo;t accidentally ignore more stuff than you intended to.</p>
 
-</div>
-</div>
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+       
+      var disqus_shortname = 'hilmanio';
 
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
   </body>
 </html>

@@ -177,7 +177,7 @@ closure_tree - move node  1.260000   0.180000   1.440000 (  2.733766)
       <guid>http://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
       <description>
 
-&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that I wasn&amp;rsquo;t aware of.&lt;/p&gt;
+&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.&lt;/p&gt;
 
 &lt;h2 id=&#34;the-problem-i-ran-into:c5cbae0bff61d1461796445415115d58&#34;&gt;The problem I ran into&lt;/h2&gt;
 

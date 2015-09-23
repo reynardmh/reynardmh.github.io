@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="http://hilman.io//css/poole.css">
   <link rel="stylesheet" href="http://hilman.io//css/syntax.css">
   <link rel="stylesheet" href="http://hilman.io//css/hyde.css">
+  <link rel="stylesheet" href="http://hilman.io//css/site.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
@@ -44,17 +45,17 @@
     </ul>
 
     <small>
-      &copy; 2015. Reynard Hilman
+      &copy; 2015 Reynard Hilman
     </small>
   </div>
 </div>
 
 
-    <div class="content container">
-<div class="post">
-  <h1>Comparing ancestry and closure_tree for your nested data structure</h1>
-  <span class="post-date">Sun, Sep 13, 2015</span>
-      
+<div class="content container">
+  <div class="post">
+    <h1>Comparing ancestry and closure_tree for your nested data structure</h1>
+    <span class="post-date">Sun, Sep 13, 2015</span>
+        
 
 <p>When it comes to implementing <a href="https://www.ruby-toolbox.com/categories/Active_Record_Nesting" target="_blank">ActiveRecord nesting</a>, there are a few popular implementations. In this post I will look closer at how <a href="https://github.com/stefankroes/ancestry" target="_blank">Ancestry</a> and <a href="http://mceachen.github.io/closure_tree/" target="_blank">Closure tree</a> work and what the pros and cons are.</p>
 
@@ -205,8 +206,20 @@ closure_tree - move node  1.260000   0.180000   1.440000 (  2.733766)
 
 <p>The source code for this <a href="https://github.com/reynardmh/nested_model_benchmark">benchmark</a> is available on github.</p>
 
-</div>
-</div>
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+       
+      var disqus_shortname = 'hilmanio';
 
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
   </body>
 </html>
