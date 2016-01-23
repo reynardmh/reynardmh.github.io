@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.15" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Stop using backtick to run shell command in Ruby &middot; hilman.io </title>
+
+  
+  <link rel="stylesheet" href="http://hilman.io//css/poole.css">
+  
+  <link rel="stylesheet" href="http://hilman.io//css/hyde.css">
+  <link rel="stylesheet" href="http://hilman.io//css/site.css">
+  <link rel="stylesheet" href="http://hilman.io//css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
+</head>
+
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://hilman.io/"><h1>hilman.io</h1></a>
+      <p>
+       Blog about coding and being human 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://hilman.io/">Home</a> </li>
+      
+        <li><a href="http://hilman.io/blog/"> Archives </a></li>
+      
+    </ul>
+
+    <small>
+      &copy; 2016 Reynard Hilman
+    </small>
+  </div>
+</div>
+
+
+<div class="content container">
+  <div class="post">
+    <h1>Stop using backtick to run shell command in Ruby</h1>
+    <span class="post-date">Sat, Jan 23, 2016</span>
+        
+
+<p>It&rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&rsquo;s fine when you just run a command that doesn&rsquo;t take any user input. But when you start passing input from untrusted source, that&rsquo;s when the trouble begins.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span>
+</code></pre></div>
+
+
+<p>The problem is that this is vulnerable to command injection. Consider this user input.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;hello; rm -rf *&quot;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span>
+</code></pre></div>
+
+
+<p>This will echo &lsquo;hello&rsquo;, and then remove all files from the current directory. Not so nice eh? Of course you can build your own input sanitizer that makes sure command injection will not happen.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">input_sanitizer</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span>
+</code></pre></div>
+
+
+<p>But the problem is that you have to make sure that every developer never forgets to use the sanitizer. I can&rsquo;t trust myself to never forget to do this, much less trusting that every developer will never forget.</p>
+
+<h2 id="so-what-are-the-alternatives:b06cb31d74ab342655d014b2186f0a0a">So what are the alternatives?</h2>
+
+<p>There are a few Ruby built in methods that automatically handle this.</p>
+
+<h3 id="kernel-system:b06cb31d74ab342655d014b2186f0a0a">Kernel.system</h3>
+
+<p><a href="http://ruby-doc.org/core-2.3.0/Kernel.html#method-i-system" target="_blank">Kernel.system</a> runs the command and returns true if the command was successful (has 0 exit status). If you pass user_input as separate arguments, it will safely escape it.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;echo&quot;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Of course you can still pass the user_input interpolated in the command string and still make your code un-safe.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Don&#39;t do this please !!</span>
+</code></pre></div>
+
+
+<p>But a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> will catch this and warn you about the vulnerability.</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">$ codeclimate analyze -e brakeman myapp.rb
+
+<span class="o">==</span> myapp.rb <span class="o">(</span><span class="m">1</span> issue<span class="o">)</span> <span class="o">==</span>
+1-: Possible <span class="nb">command</span> injection <span class="o">[</span>brakeman<span class="o">]</span>
+</code></pre></div>
+</p>
+
+<p>If you notice though, <code>Kernel.system</code> does not return the output of the command the way backtick does. This leads us to the next alternative, Open3.</p>
+
+<h3 id="open3-module:b06cb31d74ab342655d014b2186f0a0a">Open3 module</h3>
+
+<p>From <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/open3/rdoc/Open3.html" target="_blank">Open3 documentation</a>:</p>
+
+<blockquote>
+<p>Open3 grants you access to stdin, stdout, stderr and a thread to wait for the child process when running another program.</p>
+</blockquote>
+
+<p>There are many methods provided by Open3 which you can read in the documentation. For the example we&rsquo;ve been using, we can use <code>Open3.capture2</code> to replace using backtick to run a command and capture the output.</p>
+
+<p><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;hello; rm -rf *&quot;</span>
+<span class="n">output</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="no">Open3</span><span class="o">.</span><span class="n">capture2</span><span class="p">(</span><span class="s1">&#39;echo&#39;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">output</span>            <span class="c1"># -&gt; &quot;hello; rm -rf *\n&quot;</span>
+<span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">pid</span>        <span class="c1"># 123 or the process id</span>
+<span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">exitstatus</span> <span class="c1"># 0</span>
+</code></pre></div>
+</p>
+
+<h3 id="conclusion:b06cb31d74ab342655d014b2186f0a0a">Conclusion</h3>
+
+<p>It&rsquo;s always best to use a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> to detect any vulnerability in your code. When you get a warning &ldquo;Possible command injection&rdquo; from brakeman, ways to fix your code have been discussed.</p>
+
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+       
+      var disqus_shortname = 'hilmanio';
+
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+  </body>
+</html>
