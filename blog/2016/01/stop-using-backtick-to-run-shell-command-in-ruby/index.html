@@ -12,11 +12,11 @@
   <title> Stop using backtick to run shell command in Ruby &middot; hilman.io </title>
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/poole.css">
+  <link rel="stylesheet" href="http://hilman.io/css/poole.css">
   
-  <link rel="stylesheet" href="http://hilman.io//css/hyde.css">
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io//css/zenburn-hilite.css">
+  <link rel="stylesheet" href="http://hilman.io/css/hyde.css">
+  <link rel="stylesheet" href="http://hilman.io/css/site.css">
+  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
@@ -128,7 +128,7 @@
 
 <h3 id="conclusion:b06cb31d74ab342655d014b2186f0a0a">Conclusion</h3>
 
-<p>It&rsquo;s always best to use a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> to detect any vulnerability in your code. When you get a warning &ldquo;Possible command injection&rdquo; from brakeman, ways to fix your code have been discussed.</p>
+<p>It&rsquo;s OK to use backtick when you don&rsquo;t have any user input. But when you start passing untrusted input it&rsquo;s best to always use <code>system</code> or <code>Open3</code> to sanitize the input. It&rsquo;s also strongly recommended to use a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> to make sure no developer in your team forget to follow this best practice.</p>
 
   </div>
   <div id="disqus_thread"></div>

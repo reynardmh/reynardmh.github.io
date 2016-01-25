@@ -88,7 +88,7 @@
 
 &lt;h3 id=&#34;conclusion:b06cb31d74ab342655d014b2186f0a0a&#34;&gt;Conclusion&lt;/h3&gt;
 
-&lt;p&gt;It&amp;rsquo;s always best to use a static code analysis tool like &lt;a href=&#34;https://docs.codeclimate.com/docs/brakeman&#34; target=&#34;_blank&#34;&gt;codeclimate brakeman&lt;/a&gt; to detect any vulnerability in your code. When you get a warning &amp;ldquo;Possible command injection&amp;rdquo; from brakeman, ways to fix your code have been discussed.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s OK to use backtick when you don&amp;rsquo;t have any user input. But when you start passing untrusted input it&amp;rsquo;s best to always use &lt;code&gt;system&lt;/code&gt; or &lt;code&gt;Open3&lt;/code&gt; to sanitize the input. It&amp;rsquo;s also strongly recommended to use a static code analysis tool like &lt;a href=&#34;https://docs.codeclimate.com/docs/brakeman&#34; target=&#34;_blank&#34;&gt;codeclimate brakeman&lt;/a&gt; to make sure no developer in your team forget to follow this best practice.&lt;/p&gt;
 </description>
     </item>
     
