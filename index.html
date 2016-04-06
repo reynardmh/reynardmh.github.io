@@ -57,6 +57,22 @@
       
   <div class="post">
     <h1 class="post-title">
+      <a href="http://hilman.io/blog/2016/04/using-shared-examples-in-rspec/">
+        Using Shared Examples in RSpec
+      </a>
+    </h1>
+
+    <span class="post-date">Tue, Apr 5, 2016</span>
+
+    <p>Shared examples is a great RSpec feature that allows you to reuse test cases in different context.
+One use case is when you need to test different access level to a resource depending on the role.
+Lets say you have a resource that can have published/draft state. There are several roles with
+different access level to this resource.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://hilman.io/blog/2016/03/helper-print-out-activerecord-sql/">
         Helper to print out your ActiveRecord SQL
       </a>
@@ -64,7 +80,7 @@
 
     <span class="post-date">Tue, Mar 15, 2016</span>
 
-    <p>Sometime you just want to see the SQL statement that your ActiveRecord magically generate, without going through hundreds of lines of them in your log file. An easy way to do that is to assign the <code>ActiveRecord::Base.logger</code> to a new <code>Logger</code> that prints to the <code>STDOUT</code>, and then change it back to the old logger so it doesn&rsquo;t keep printing out SQL for the rest of your code.</p>
+    <p>Sometime you just want to see the SQL statement that your ActiveRecord magically generate, without going through hundreds of lines in your log file. An easy way to do that is to assign the <code>ActiveRecord::Base.logger</code> to a new <code>Logger</code> that prints to the <code>STDOUT</code>, and then change it back to the old logger so it doesn&rsquo;t keep printing out SQL for the rest of your code.</p>
 
   </div>
   

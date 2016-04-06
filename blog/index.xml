@@ -7,8 +7,122 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Tue, 15 Mar 2016 19:56:54 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 05 Apr 2016 10:53:28 -0400</lastBuildDate>
     <atom:link href="http://hilman.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Using Shared Examples in RSpec</title>
+      <link>http://hilman.io/blog/2016/04/using-shared-examples-in-rspec/</link>
+      <pubDate>Tue, 05 Apr 2016 10:53:28 -0400</pubDate>
+      
+      <guid>http://hilman.io/blog/2016/04/using-shared-examples-in-rspec/</guid>
+      <description>&lt;p&gt;Shared examples is a great RSpec feature that allows you to reuse test cases in different context.
+One use case is when you need to test different access level to a resource depending on the role.
+Lets say you have a resource that can have published/draft state. There are several roles with
+different access level to this resource.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Editor - has access to published/draft resources&lt;/li&gt;
+&lt;li&gt;Viewer - has access to published resources only&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;One way you could implement RSpec test for this is by writing separate tests for each role:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Assume we have set up the data for @editor, @viewer, @published_resource and @draft_resource&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;as editor&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;before&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:each&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;make_request_as&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@editor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;can view published resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@published_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;can view draft resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@draft_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;as viewer&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;before&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:each&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;make_request_as&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@viewer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;can view published resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@published_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;cannot view draft resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@draft_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect NOT to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There is a little duplication on testing if the user &amp;ldquo;can view published resource&amp;rdquo;.
+But the test is not too terrible. However, lets say you have additional requirement
+to add 2 more user roles.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Admin - has access to published/draft resources&lt;/li&gt;
+&lt;li&gt;Non logged in user - has access to published resources only&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now you have to duplicate the test case for editor to test admin permission,
+and duplicate the test case for viewer to test the non-logged in user.
+That is a lot of duplication. A better way is to use shared_examples.&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;n&#34;&gt;shared_examples&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view published resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;can view published resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@published_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;shared_examples&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view draft resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;can view draft resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@draft_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;shared_examples&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who CANNOT view draft resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;CANNOT view draft resources&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/resources/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@draft_resource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# expect NOT to get the resource&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;shared_examples is basically a grouping of examples that can be reused in different contexts
+by including it using the &lt;code&gt;it_behaves_like &#39;...&#39;&lt;/code&gt; method. So now we can include the right
+shared examples in each role context.&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;as editor&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;before&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:each&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;make_request_as&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@editor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view published resources&amp;#39;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view draft resources&amp;#39;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;as admin&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;before&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:each&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;make_request_as&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@admin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view published resources&amp;#39;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view draft resources&amp;#39;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;as viewer&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;before&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:each&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;make_request_as&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;vi&#34;&gt;@viewer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view published resources&amp;#39;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who CANNOT view draft resources&amp;#39;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;as non-logged in user&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who can view published resources&amp;#39;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;it_behaves_like&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;user who CANNOT view draft resources&amp;#39;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Not only it&amp;rsquo;s less duplication, it&amp;rsquo;s so nice to read. That&amp;rsquo;s the beauty of RSpec :)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Helper to print out your ActiveRecord SQL</title>
@@ -16,7 +130,7 @@
       <pubDate>Tue, 15 Mar 2016 19:56:54 -0400</pubDate>
       
       <guid>http://hilman.io/blog/2016/03/helper-print-out-activerecord-sql/</guid>
-      <description>&lt;p&gt;Sometime you just want to see the SQL statement that your ActiveRecord magically generate, without going through hundreds of lines of them in your log file. An easy way to do that is to assign the &lt;code&gt;ActiveRecord::Base.logger&lt;/code&gt; to a new &lt;code&gt;Logger&lt;/code&gt; that prints to the &lt;code&gt;STDOUT&lt;/code&gt;, and then change it back to the old logger so it doesn&amp;rsquo;t keep printing out SQL for the rest of your code.&lt;/p&gt;
+      <description>&lt;p&gt;Sometime you just want to see the SQL statement that your ActiveRecord magically generate, without going through hundreds of lines in your log file. An easy way to do that is to assign the &lt;code&gt;ActiveRecord::Base.logger&lt;/code&gt; to a new &lt;code&gt;Logger&lt;/code&gt; that prints to the &lt;code&gt;STDOUT&lt;/code&gt;, and then change it back to the old logger so it doesn&amp;rsquo;t keep printing out SQL for the rest of your code.&lt;/p&gt;
 
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;n&#34;&gt;ol&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Base&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logger&lt;/span&gt;
 &lt;span class=&#34;no&#34;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Base&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logger&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;Logger&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -39,7 +153,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
-&lt;p&gt;So you can just start using it like this&lt;/p&gt;
+&lt;p&gt;So you can just wrap your code inside the print_sql block, and it will print out all SQL statements that were executed inside that block only.&lt;/p&gt;
 
 &lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# assuming User is an ActiveRecord::Base&lt;/span&gt;
 &lt;span class=&#34;no&#34;&gt;User&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;print_sql&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
