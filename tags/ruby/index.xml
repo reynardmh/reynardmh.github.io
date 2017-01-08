@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ruby on hilman.io</title>
-    <link>http://hilman.io/tags/ruby/</link>
+    <link>http://hilman.io/tags/ruby/index.xml</link>
     <description>Recent content in Ruby on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Sun, 31 Jan 2016 21:07:34 -0500</lastBuildDate>
     <atom:link href="http://hilman.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
@@ -16,7 +15,8 @@
       <pubDate>Sun, 31 Jan 2016 21:07:34 -0500</pubDate>
       
       <guid>http://hilman.io/blog/2016/01/tempfile/</guid>
-      <description>&lt;p&gt;Tempfile gives you an easy way to quickly create a temporary file without having to worry about generating a file name that doesn’t already exist and cleaning up the file after you are done. However, you have to be aware that the temporary file will be deleted when the tempfile instance is garbage collected.&lt;/p&gt;
+      <description>&lt;p&gt;Tempfile gives you an easy way to quickly create a temporary file without having to worry about generating a file name that doesn’t already exist and cleaning up the file after you are done. However, you have to be aware that the temporary file will be deleted when the tempfile instance is garbage collected.
+&lt;/p&gt;
 
 &lt;p&gt;From ruby &lt;a href=&#34;http://ruby-doc.org/stdlib-2.3.0/libdoc/tempfile/rdoc/Tempfile.html&#34; target=&#34;blank&#34;&gt;Tempfile&lt;/a&gt; documentation&lt;/p&gt;
 
@@ -52,7 +52,7 @@
 
 &lt;p&gt;In order to avoid this issue, you need to return the tmpfile instance. So as long as your code still references the tempfile instance, it will not be garbage collected.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;create_tempfile&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;create_tempfile&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
   &lt;span class=&#34;n&#34;&gt;tmpfile&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;Tempfile&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;
   &lt;span class=&#34;n&#34;&gt;tmpfile&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
   &lt;span class=&#34;n&#34;&gt;tmpfile&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;close&lt;/span&gt;
@@ -62,9 +62,7 @@
 &lt;span class=&#34;n&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;create_tempfile&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;‘&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hello&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;’&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;no&#34;&gt;GC&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;
 &lt;span class=&#34;no&#34;&gt;File&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;read&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# this will work even after garbage collection ran&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -76,6 +74,8 @@
       <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ruby-grape/grape&#34; target=&#34;blank&#34;&gt;Grape&lt;/a&gt; is a Rack based Ruby framework for building API.
 It&amp;rsquo;s only a few years old and has not reached version 1.0 yet. The main github page has a very good documentation but
 is still not as complete as Rails guide. In this post, I will discuss how to test file upload endpoint with RSpec.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;Suppose you have an endpoint that takes a file input.&lt;/p&gt;
 
@@ -122,8 +122,7 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
   &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
 &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-</description>
+&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -132,13 +131,12 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
       <pubDate>Sat, 23 Jan 2016 13:56:39 -0500</pubDate>
       
       <guid>http://hilman.io/blog/2016/01/stop-using-backtick-to-run-shell-command-in-ruby/</guid>
-      <description>
+      <description>&lt;p&gt;It&amp;rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&amp;rsquo;s fine when you just run a command that doesn&amp;rsquo;t take any user input. But when you start passing input from untrusted source, that&amp;rsquo;s when the trouble begins.&lt;/p&gt;
 
-&lt;p&gt;It&amp;rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&amp;rsquo;s fine when you just run a command that doesn&amp;rsquo;t take any user input. But when you start passing input from untrusted source, that&amp;rsquo;s when the trouble begins.&lt;/p&gt;
-
+&lt;p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;n&#34;&gt;output&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`echo &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;#{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;user_input&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/p&gt;
 
 &lt;p&gt;The problem is that this is vulnerable to command injection. Consider this user input.&lt;/p&gt;
 
@@ -155,11 +153,11 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
 
 &lt;p&gt;But the problem is that you have to make sure that every developer never forgets to use the sanitizer. I can&amp;rsquo;t trust myself to never forget to do this, much less trusting that every developer will never forget.&lt;/p&gt;
 
-&lt;h2 id=&#34;so-what-are-the-alternatives:b06cb31d74ab342655d014b2186f0a0a&#34;&gt;So what are the alternatives?&lt;/h2&gt;
+&lt;h2 id=&#34;so-what-are-the-alternatives&#34;&gt;So what are the alternatives?&lt;/h2&gt;
 
 &lt;p&gt;There are a few Ruby built in methods that automatically handle this.&lt;/p&gt;
 
-&lt;h3 id=&#34;kernel-system:b06cb31d74ab342655d014b2186f0a0a&#34;&gt;Kernel.system&lt;/h3&gt;
+&lt;h3 id=&#34;kernel-system&#34;&gt;Kernel.system&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://ruby-doc.org/core-2.3.0/Kernel.html#method-i-system&#34; target=&#34;_blank&#34;&gt;Kernel.system&lt;/a&gt; runs the command and returns true if the command was successful (has 0 exit status). If you pass user_input as separate arguments, it will safely escape it.&lt;/p&gt;
 
@@ -175,16 +173,16 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
 
 &lt;p&gt;But a static code analysis tool like &lt;a href=&#34;https://docs.codeclimate.com/docs/brakeman&#34; target=&#34;_blank&#34;&gt;codeclimate brakeman&lt;/a&gt; will catch this and warn you about the vulnerability.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ codeclimate analyze -e brakeman myapp.rb
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ codeclimate analyze -e brakeman myapp.rb
 
 &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; myapp.rb &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; issue&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt;
 1-: Possible &lt;span class=&#34;nb&#34;&gt;command&lt;/span&gt; injection &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;brakeman&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;If you notice though, &lt;code&gt;Kernel.system&lt;/code&gt; does not return the output of the command the way backtick does. This leads us to the next alternative, Open3.&lt;/p&gt;
 
-&lt;h3 id=&#34;open3-module:b06cb31d74ab342655d014b2186f0a0a&#34;&gt;Open3 module&lt;/h3&gt;
+&lt;h3 id=&#34;open3-module&#34;&gt;Open3 module&lt;/h3&gt;
 
 &lt;p&gt;From &lt;a href=&#34;http://ruby-doc.org/stdlib-2.3.0/libdoc/open3/rdoc/Open3.html&#34; target=&#34;_blank&#34;&gt;Open3 documentation&lt;/a&gt;:&lt;/p&gt;
 
@@ -194,18 +192,17 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
 
 &lt;p&gt;There are many methods provided by Open3 which you can read in the documentation. For the example we&amp;rsquo;ve been using, we can use &lt;code&gt;Open3.capture2&lt;/code&gt; to replace using backtick to run a command and capture the output.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;n&#34;&gt;user_input&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;hello; rm -rf *&amp;quot;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;n&#34;&gt;user_input&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;hello; rm -rf *&amp;quot;&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;Open3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;capture2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;echo&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;user_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;nb&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;            &lt;span class=&#34;c1&#34;&gt;# -&amp;gt; &amp;quot;hello; rm -rf *\n&amp;quot;&lt;/span&gt;
 &lt;span class=&#34;nb&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pid&lt;/span&gt;        &lt;span class=&#34;c1&#34;&gt;# 123 or the process id&lt;/span&gt;
 &lt;span class=&#34;nb&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;exitstatus&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
 
-&lt;h3 id=&#34;conclusion:b06cb31d74ab342655d014b2186f0a0a&#34;&gt;Conclusion&lt;/h3&gt;
 
-&lt;p&gt;It&amp;rsquo;s OK to use backtick when you don&amp;rsquo;t have any user input. But when you start passing untrusted input it&amp;rsquo;s best to always use &lt;code&gt;system&lt;/code&gt; or &lt;code&gt;Open3&lt;/code&gt; to sanitize the input. It&amp;rsquo;s also strongly recommended to use a static code analysis tool like &lt;a href=&#34;https://docs.codeclimate.com/docs/brakeman&#34; target=&#34;_blank&#34;&gt;codeclimate brakeman&lt;/a&gt; to make sure no developer in your team forget to follow this best practice.&lt;/p&gt;
-</description>
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;It&amp;rsquo;s OK to use backtick when you don&amp;rsquo;t have any user input. But when you start passing untrusted input it&amp;rsquo;s best to always use &lt;code&gt;system&lt;/code&gt; or &lt;code&gt;Open3&lt;/code&gt; to sanitize the input. It&amp;rsquo;s also strongly recommended to use a static code analysis tool like &lt;a href=&#34;https://docs.codeclimate.com/docs/brakeman&#34; target=&#34;_blank&#34;&gt;codeclimate brakeman&lt;/a&gt; to make sure no developer in your team forget to follow this best practice.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -214,11 +211,11 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
       <pubDate>Sun, 13 Sep 2015 23:41:00 -0400</pubDate>
       
       <guid>http://hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/</guid>
-      <description>
+      <description>&lt;p&gt;When it comes to implementing &lt;a href=&#34;https://www.ruby-toolbox.com/categories/Active_Record_Nesting&#34; target=&#34;_blank&#34;&gt;ActiveRecord nesting&lt;/a&gt;, there are a few popular implementations. In this post I will look closer at how &lt;a href=&#34;https://github.com/stefankroes/ancestry&#34; target=&#34;_blank&#34;&gt;Ancestry&lt;/a&gt; and &lt;a href=&#34;http://mceachen.github.io/closure_tree/&#34; target=&#34;_blank&#34;&gt;Closure tree&lt;/a&gt; work and what the pros and cons are.&lt;/p&gt;
 
-&lt;p&gt;When it comes to implementing &lt;a href=&#34;https://www.ruby-toolbox.com/categories/Active_Record_Nesting&#34; target=&#34;_blank&#34;&gt;ActiveRecord nesting&lt;/a&gt;, there are a few popular implementations. In this post I will look closer at how &lt;a href=&#34;https://github.com/stefankroes/ancestry&#34; target=&#34;_blank&#34;&gt;Ancestry&lt;/a&gt; and &lt;a href=&#34;http://mceachen.github.io/closure_tree/&#34; target=&#34;_blank&#34;&gt;Closure tree&lt;/a&gt; work and what the pros and cons are.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;how-ancestry-works:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;How ancestry works&lt;/h2&gt;
+&lt;h2 id=&#34;how-ancestry-works&#34;&gt;How ancestry works&lt;/h2&gt;
 
 &lt;p&gt;Ancestry works by adding one column (by default named &amp;ldquo;ancestry&amp;rdquo;) that replaces the parent_id. Instead of just storing the parent_id, ancestry stores the whole ancestry path to the parent_id.&lt;/p&gt;
 
@@ -247,7 +244,7 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
 
 &lt;p&gt;To select all ancestors of a node, you just select &lt;code&gt;where id IN (ancestry_ids)&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;how-closure-tree-works:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;How closure_tree works&lt;/h2&gt;
+&lt;h2 id=&#34;how-closure-tree-works&#34;&gt;How closure_tree works&lt;/h2&gt;
 
 &lt;p&gt;Closure tree is a little more complicated than Ancestry. In addition to using the regular parent_id on your model, it also uses a separate hierarchy table.&lt;/p&gt;
 
@@ -283,9 +280,9 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
 
 &lt;p&gt;The generations column indicates how many generations the relation between the ancestor_id and the descendant_id. For example (id: 1) is the direct parent of (id: 2), therefore their relation has generations:1. All rows where ancestor_id = descendant_id has generations:0.&lt;/p&gt;
 
-&lt;h2 id=&#34;benchmark:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Benchmark&lt;/h2&gt;
+&lt;h2 id=&#34;benchmark&#34;&gt;Benchmark&lt;/h2&gt;
 
-&lt;h3 id=&#34;write:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Write&lt;/h3&gt;
+&lt;h3 id=&#34;write&#34;&gt;Write&lt;/h3&gt;
 
 &lt;p&gt;Populating deeply nested data (25 level deep)&lt;/p&gt;
 
@@ -301,7 +298,7 @@ Closure tree: 0.490023
 
 &lt;p&gt;So in general closure_tree is more than 2 times slower at inserting data, because it has to do a lot more inserts to the hierarchy table.&lt;/p&gt;
 
-&lt;h3 id=&#34;read:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Read&lt;/h3&gt;
+&lt;h3 id=&#34;read&#34;&gt;Read&lt;/h3&gt;
 
 &lt;p&gt;Let&amp;rsquo;s see how they do for selecting the ancestors and descendants&lt;/p&gt;
 
@@ -316,7 +313,7 @@ closure_tree.descendants  0.020000   0.010000   0.030000 (  0.021242)
 
 &lt;p&gt;The select benchmark might be really dependent on db caching. Assuming the same db and caching mechanism, ancestry wins with a pretty good margin.&lt;/p&gt;
 
-&lt;h3 id=&#34;update:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Update&lt;/h3&gt;
+&lt;h3 id=&#34;update&#34;&gt;Update&lt;/h3&gt;
 
 &lt;p&gt;Because each node stores information about its ancestors, moving a node means we need to update all the descendants to reflect the new ancestry tree.&lt;/p&gt;
 
@@ -334,37 +331,36 @@ ancestry - move node      0.510000   0.170000   0.680000 (  0.799853)
 closure_tree - move node  1.260000   0.180000   1.440000 (  2.733766)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;summary:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Summary&lt;/h2&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
 
-&lt;h3 id=&#34;ancestry-pros:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Ancestry Pros:&lt;/h3&gt;
+&lt;h3 id=&#34;ancestry-pros&#34;&gt;Ancestry Pros:&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Simpler data structure to understand&lt;/li&gt;
 &lt;li&gt;In general faster (inserting, selecting and moving nodes around)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;ancestry-cons:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;Ancestry Cons:&lt;/h3&gt;
+&lt;h3 id=&#34;ancestry-cons&#34;&gt;Ancestry Cons:&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Because the ancestry column is a varchar(255), there is a limitation on the tree depth (depending on what type of primary key you use). An INT in MySql has a max value of 2147483647 (10 digits), which means that you are limited to &lt;sup&gt;255&lt;/sup&gt;&amp;frasl;&lt;sub&gt;11&lt;/sub&gt; = 23 ancestors. You have to make sure that your application does not allow creating more nested data than this limit.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;closure-tree-pros:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;closure_tree Pros:&lt;/h3&gt;
+&lt;h3 id=&#34;closure-tree-pros&#34;&gt;closure_tree Pros:&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;If you have a huge existing nested data (using parent_id), you don&amp;rsquo;t have to run migration to add a new column (which could take a long time).&lt;/li&gt;
 &lt;li&gt;Unlimited level of nesting&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;closure-tree-cons:628b029b0b3197d22f44409ae77e0f7d&#34;&gt;closure_tree Cons:&lt;/h3&gt;
+&lt;h3 id=&#34;closure-tree-cons&#34;&gt;closure_tree Cons:&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Slower&lt;/li&gt;
 &lt;li&gt;Not ideal if you need to move nodes often&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The source code for this &lt;a href=&#34;https://github.com/reynardmh/nested_model_benchmark&#34;&gt;benchmark&lt;/a&gt; is available on github.&lt;/p&gt;
-</description>
+&lt;p&gt;The source code for this &lt;a href=&#34;https://github.com/reynardmh/nested_model_benchmark&#34;&gt;benchmark&lt;/a&gt; is available on github.&lt;/p&gt;</description>
     </item>
     
   </channel>

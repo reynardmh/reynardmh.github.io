@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Grape Framework on hilman.io</title>
-    <link>http://hilman.io/tags/grape-framework/</link>
+    <link>http://hilman.io/tags/grape-framework/index.xml</link>
     <description>Recent content in Grape Framework on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Thu, 28 Jan 2016 23:26:39 -0500</lastBuildDate>
     <atom:link href="http://hilman.io/tags/grape-framework/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
@@ -19,6 +18,8 @@
       <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ruby-grape/grape&#34; target=&#34;blank&#34;&gt;Grape&lt;/a&gt; is a Rack based Ruby framework for building API.
 It&amp;rsquo;s only a few years old and has not reached version 1.0 yet. The main github page has a very good documentation but
 is still not as complete as Rails guide. In this post, I will discuss how to test file upload endpoint with RSpec.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;Suppose you have an endpoint that takes a file input.&lt;/p&gt;
 
@@ -65,8 +66,7 @@ That is by creating an instance of &lt;code&gt;Rack::Test::UploadedFile&lt;/code
   &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
 &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-</description>
+&lt;/p&gt;</description>
     </item>
     
   </channel>

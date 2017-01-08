@@ -1,68 +1,48 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
   <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title> Stop using backtick to run shell command in Ruby &middot; hilman.io </title>
+  
+    <title> Stop using backtick to run shell command in Ruby &middot; hilman.io </title>
+  
 
   
-  <link rel="stylesheet" href="http://hilman.io/css/poole.css">
-  
-  <link rel="stylesheet" href="http://hilman.io/css/hyde.css">
-  <link rel="stylesheet" href="http://hilman.io/css/site.css">
+  <link rel="stylesheet" href="http://hilman.io//css/site.css">
   <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
   <link rel="shortcut icon" href="http://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
 </head>
-
 <body>
+<div id="site-container">
+  <ul id="site-header">
+  <li><a href="http://hilman.io/">Home</a></li>
+  <li><a href="http://hilman.io/about/">About</a></li>
+</ul>
 
-<div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <a href="http://hilman.io/"><h1>hilman.io</h1></a>
-      <p>
-       Blog about coding and being human 
-      </p>
-    </div>
-
-    <ul class="sidebar-nav">
-      <li><a href="http://hilman.io/">Home</a> </li>
-      
-        <li><a href="http://hilman.io/blog/"> Archives </a></li>
-      
-    </ul>
-
-    <small>
-      &copy; 2016 Reynard Hilman
-    </small>
-  </div>
-</div>
-
+  <div id="site-body">
 
 <div class="content container">
   <div class="post">
     <h1>Stop using backtick to run shell command in Ruby</h1>
     <span class="post-date">Sat, Jan 23, 2016</span>
-        
+    <p>It&rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&rsquo;s fine when you just run a command that doesn&rsquo;t take any user input. But when you start passing input from untrusted source, that&rsquo;s when the trouble begins.</p>
 
-<p>It&rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&rsquo;s fine when you just run a command that doesn&rsquo;t take any user input. But when you start passing input from untrusted source, that&rsquo;s when the trouble begins.</p>
-
+<p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span>
 </code></pre></div>
-
+</p>
 
 <p>The problem is that this is vulnerable to command injection. Consider this user input.</p>
 
@@ -79,11 +59,11 @@
 
 <p>But the problem is that you have to make sure that every developer never forgets to use the sanitizer. I can&rsquo;t trust myself to never forget to do this, much less trusting that every developer will never forget.</p>
 
-<h2 id="so-what-are-the-alternatives:b06cb31d74ab342655d014b2186f0a0a">So what are the alternatives?</h2>
+<h2 id="so-what-are-the-alternatives">So what are the alternatives?</h2>
 
 <p>There are a few Ruby built in methods that automatically handle this.</p>
 
-<h3 id="kernel-system:b06cb31d74ab342655d014b2186f0a0a">Kernel.system</h3>
+<h3 id="kernel-system">Kernel.system</h3>
 
 <p><a href="http://ruby-doc.org/core-2.3.0/Kernel.html#method-i-system" target="_blank">Kernel.system</a> runs the command and returns true if the command was successful (has 0 exit status). If you pass user_input as separate arguments, it will safely escape it.</p>
 
@@ -99,16 +79,16 @@
 
 <p>But a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> will catch this and warn you about the vulnerability.</p>
 
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">$ codeclimate analyze -e brakeman myapp.rb
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ codeclimate analyze -e brakeman myapp.rb
 
 <span class="o">==</span> myapp.rb <span class="o">(</span><span class="m">1</span> issue<span class="o">)</span> <span class="o">==</span>
 1-: Possible <span class="nb">command</span> injection <span class="o">[</span>brakeman<span class="o">]</span>
 </code></pre></div>
-</p>
+
 
 <p>If you notice though, <code>Kernel.system</code> does not return the output of the command the way backtick does. This leads us to the next alternative, Open3.</p>
 
-<h3 id="open3-module:b06cb31d74ab342655d014b2186f0a0a">Open3 module</h3>
+<h3 id="open3-module">Open3 module</h3>
 
 <p>From <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/open3/rdoc/Open3.html" target="_blank">Open3 documentation</a>:</p>
 
@@ -118,36 +98,34 @@
 
 <p>There are many methods provided by Open3 which you can read in the documentation. For the example we&rsquo;ve been using, we can use <code>Open3.capture2</code> to replace using backtick to run a command and capture the output.</p>
 
-<p><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;hello; rm -rf *&quot;</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;hello; rm -rf *&quot;</span>
 <span class="n">output</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="no">Open3</span><span class="o">.</span><span class="n">capture2</span><span class="p">(</span><span class="s1">&#39;echo&#39;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
 <span class="nb">puts</span> <span class="n">output</span>            <span class="c1"># -&gt; &quot;hello; rm -rf *\n&quot;</span>
 <span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">pid</span>        <span class="c1"># 123 or the process id</span>
 <span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">exitstatus</span> <span class="c1"># 0</span>
 </code></pre></div>
-</p>
 
-<h3 id="conclusion:b06cb31d74ab342655d014b2186f0a0a">Conclusion</h3>
+
+<h3 id="conclusion">Conclusion</h3>
 
 <p>It&rsquo;s OK to use backtick when you don&rsquo;t have any user input. But when you start passing untrusted input it&rsquo;s best to always use <code>system</code> or <code>Open3</code> to sanitize the input. It&rsquo;s also strongly recommended to use a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> to make sure no developer in your team forget to follow this best practice.</p>
-
   </div>
   <div id="disqus_thread"></div>
   <script type="text/javascript">
-       
-      var disqus_shortname = 'hilmanio';
+     
+    var disqus_shortname = 'hilmanio';
 
-       
-      (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
   </script>
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 </div>
-<script type="text/javascript"
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+</div> 
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -157,5 +135,10 @@
   ga('send', 'pageview');
 </script>
 
-  </body>
+<div id="footer">
+  &copy; 2017 Reynard Hilman
+</div>
+</div> 
+</body>
 </html>
+

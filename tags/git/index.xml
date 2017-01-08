@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Git on hilman.io</title>
-    <link>http://hilman.io/tags/git/</link>
+    <link>http://hilman.io/tags/git/index.xml</link>
     <description>Recent content in Git on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Mon, 07 Sep 2015 20:15:26 -0400</lastBuildDate>
     <atom:link href="http://hilman.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
@@ -16,11 +15,11 @@
       <pubDate>Mon, 07 Sep 2015 20:15:26 -0400</pubDate>
       
       <guid>http://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
-      <description>
+      <description>&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.&lt;/p&gt;
 
-&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;the-problem-i-ran-into:c5cbae0bff61d1461796445415115d58&#34;&gt;The problem I ran into&lt;/h2&gt;
+&lt;h2 id=&#34;the-problem-i-ran-into&#34;&gt;The problem I ran into&lt;/h2&gt;
 
 &lt;p&gt;I had just moved a directory to another directory.&lt;/p&gt;
 
@@ -52,7 +51,7 @@ doc
 /some/path/doc # file
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;what-if-you-just-want-to-ignore-the-directory-at-the-root-level:c5cbae0bff61d1461796445415115d58&#34;&gt;What if you just want to ignore the directory at the root level?&lt;/h2&gt;
+&lt;h2 id=&#34;what-if-you-just-want-to-ignore-the-directory-at-the-root-level&#34;&gt;What if you just want to ignore the directory at the root level?&lt;/h2&gt;
 
 &lt;p&gt;The correct syntax for that is to put leading and trailing slash:&lt;/p&gt;
 
@@ -97,15 +96,14 @@ doc/
 /another/path/doc # file
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;summary:c5cbae0bff61d1461796445415115d58&#34;&gt;Summary&lt;/h2&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;To ignore just directories, add a slash at the end of the pattern. Otherwise it will ignore both files and directories.&lt;/li&gt;
 &lt;li&gt;To ignore just files/directories at the root, add a slash at the beginning of the pattern. Otherwise it will ignore files/directories anywhere in your project.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;If you&amp;rsquo;re curious, check out a more detailed documentation about &lt;a href=&#34;http://git-scm.com/docs/gitignore&#34;&gt;gitignore patterns&lt;/a&gt;. These 2 basic patterns seem like a must know for most git users, so you don&amp;rsquo;t accidentally ignore more stuff than you intended to.&lt;/p&gt;
-</description>
+&lt;p&gt;If you&amp;rsquo;re curious, check out a more detailed documentation about &lt;a href=&#34;http://git-scm.com/docs/gitignore&#34;&gt;gitignore patterns&lt;/a&gt;. These 2 basic patterns seem like a must know for most git users, so you don&amp;rsquo;t accidentally ignore more stuff than you intended to.&lt;/p&gt;</description>
     </item>
     
   </channel>
