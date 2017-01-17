@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
-    <title> About &middot; hilman.io </title>
+    <title> Node.Js &middot; hilman.io </title>
   
 
   
@@ -22,7 +22,7 @@
   <link rel="shortcut icon" href="http://hilman.io/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
+  <link href="http://hilman.io/tags/node.js/index.xml" rel="alternate" type="application/rss+xml" title="hilman.io" />
 </head>
 <body>
 <div id="site-container">
@@ -34,13 +34,15 @@
   <div id="site-body">
 
 <div class="content container">
-  <h1>About</h1>
-  <p>This is my personal site where I write mostly about programming related stuff. I&rsquo;m a software developer at <a href="https://www.powerschool.com/">PowerSchool</a>.
-Previously, I co-founded <a href="https://www.haikulearning.com/">Haiku Learning</a>.</p>
-
-<p>This site is built with <a href="http://gohugo.io">Hugo</a> static site generator and hosted in <a href="https://github.com/reynardmh/reynardmh.github.io">Github</a>.</p>
-
+  <ul class="posts">
+    
+    <li>
+      <span><a href="http://hilman.io/blog/2017/01/db-fabricator/">Introducing DB Fabricator</a> <time class="pull-right post-list">Mon, Jan 16, 2017</time></span>
+    </li>
+    
+  </ul>
 </div>
+
 </div> 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
