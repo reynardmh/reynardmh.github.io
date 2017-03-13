@@ -127,6 +127,8 @@ async nature of node.js, &lt;code&gt;Fabricator.fabricate&lt;/code&gt; returns a
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; Version 2.0 provides a more straightforward way to do the above. See &lt;a href=&#34;http://hilman.io/blog/2017/03/db-fabricator-2.0/&#34;&gt;DB Fabricator version 2.0&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&#34;nested-templates&#34;&gt;Nested Templates&lt;/h2&gt;
 
 &lt;p&gt;You can create a template that uses another template as a starting point. For example, we have a few user
