@@ -102,7 +102,10 @@ So you have to do it this way:&lt;/p&gt;
 
 
 &lt;p&gt;That&amp;rsquo;s all the new features on DB Fabricator 2.0. The remaining features from &lt;a href=&#34;http://hilman.io/blog/2017/01/db-fabricator/&#34;&gt;version 1.0&lt;/a&gt; are still the same.
-I hope this new version makes it even easier to set up database context for your integration test, or other things.&lt;/p&gt;</description>
+I hope this new version makes it even easier to set up database context for your integration test, or other things.&lt;/p&gt;
+
+&lt;p&gt;Download the source code at &lt;a href=&#34;https://github.com/reynardmh/db-fabricator.js&#34;&gt;DB Fabricator&lt;/a&gt; on Github,
+or install &lt;a href=&#34;https://www.npmjs.com/package/db-fabricator&#34;&gt;db-fabricator&lt;/a&gt; from npm.&lt;/p&gt;</description>
     </item>
     
     <item>
