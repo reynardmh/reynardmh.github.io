@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://hilman.io/blog/2017/03/test-context-builder/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://hilman.io/blog/2017/03/db-fabricator-2.0/</loc>
     <lastmod>2017-03-12T17:08:05-04:00</lastmod>
   </url>
@@ -52,7 +57,7 @@
   
   <url>
     <loc>http://hilman.io/blog/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -70,19 +75,19 @@
   
   <url>
     <loc>http://hilman.io/tags/javascript/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://hilman.io/tags/node/index.js/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://hilman.io/tags/programming/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -105,13 +110,13 @@
   
   <url>
     <loc>http://hilman.io/tags/typescript/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://hilman.io/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
     <priority>0</priority>
   </url>
   
