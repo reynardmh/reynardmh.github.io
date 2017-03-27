@@ -201,7 +201,15 @@ will be created with the same school and district.&lt;/p&gt;
   &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
 &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;</description>
+&lt;/p&gt;
+
+&lt;h2 id=&#34;installing&#34;&gt;Installing&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.npmjs.com/package/test-context-builder&#34;&gt;test-context-builder&lt;/a&gt; is available as npm package.
+You can install it by&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ npm install test-context-builder
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
