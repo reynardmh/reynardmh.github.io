@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Javascript on hilman.io</title>
-    <link>https://hilman.io/tags/javascript/</link>
+    <link>https://www.hilman.io/tags/javascript/</link>
     <description>Recent content in Javascript on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
     <lastBuildDate>Sat, 25 Mar 2017 22:08:05 -0400</lastBuildDate>
     
-	<atom:link href="https://hilman.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.hilman.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Test Context Builder</title>
-      <link>https://hilman.io/blog/2017/03/test-context-builder/</link>
+      <link>https://www.hilman.io/blog/2017/03/test-context-builder/</link>
       <pubDate>Sat, 25 Mar 2017 22:08:05 -0400</pubDate>
       
-      <guid>https://hilman.io/blog/2017/03/test-context-builder/</guid>
+      <guid>https://www.hilman.io/blog/2017/03/test-context-builder/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://github.com/reynardmh/test-context-builder&#34;&gt;Test context builder&lt;/a&gt; is an npm package I wrote to
 complement &lt;a href=&#34;https://github.com/reynardmh/db-fabricator.js&#34;&gt;db-fabricator&lt;/a&gt;. The main purpose of db-fabricator
 is to setup test context data for integration testing. However, setting up test context data gets repetitive and
@@ -30,10 +30,10 @@ top of it. This is what &lt;em&gt;test-context-builder&lt;/em&gt; is for.&lt;/p&
     
     <item>
       <title>DB Fabricator 2.0</title>
-      <link>https://hilman.io/blog/2017/03/db-fabricator-2.0/</link>
+      <link>https://www.hilman.io/blog/2017/03/db-fabricator-2.0/</link>
       <pubDate>Sun, 12 Mar 2017 17:08:05 -0400</pubDate>
       
-      <guid>https://hilman.io/blog/2017/03/db-fabricator-2.0/</guid>
+      <guid>https://www.hilman.io/blog/2017/03/db-fabricator-2.0/</guid>
       <description>&lt;p&gt;It hasn&amp;rsquo;t been that long since I released DB Fabricator version 1.0. But I quickly realized the limitation as I use it more
 on my project. The biggest annoyance is the fact that when you want to fabricate an object that depends on another
 fabricated object, you have to fabricate the dependency after resolving the root object promise,
@@ -44,10 +44,10 @@ resulting in a somewhat verbose nested code like this:&lt;/p&gt;
     
     <item>
       <title>Introducing DB Fabricator</title>
-      <link>https://hilman.io/blog/2017/01/db-fabricator/</link>
+      <link>https://www.hilman.io/blog/2017/01/db-fabricator/</link>
       <pubDate>Mon, 16 Jan 2017 17:57:41 -0500</pubDate>
       
-      <guid>https://hilman.io/blog/2017/01/db-fabricator/</guid>
+      <guid>https://www.hilman.io/blog/2017/01/db-fabricator/</guid>
       <description>&lt;p&gt;When writing end to end tests, we often need to set up a context by creating some data in database.
 Each test case should start with a clean slate and have data that are created only for that test.
 So it&amp;rsquo;s important to make creating these test data as simple as possible.&lt;/p&gt;
