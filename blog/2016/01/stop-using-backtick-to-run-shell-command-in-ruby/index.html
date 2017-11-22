@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
+    <meta name="keywords" content="ruby, programming">
     <title> Stop using backtick to run shell command in Ruby &middot; hilman.io </title>
   
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://hilman.io/css/site.css">
+  <link rel="stylesheet" href="https://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
-  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://hilman.io/apple-touch-icon.png">
+  <link rel="shortcut icon" href="https://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
@@ -27,8 +27,8 @@
 <body>
 <div id="site-container">
   <ul id="site-header">
-  <li><a href="http://hilman.io/">Home</a></li>
-  <li><a href="http://hilman.io/about/">About</a></li>
+  <li><a href="https://hilman.io/">Home</a></li>
+  <li><a href="https://hilman.io/about/">About</a></li>
 </ul>
 
   <div id="site-body">
@@ -40,22 +40,16 @@
     <p>It&rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&rsquo;s fine when you just run a command that doesn&rsquo;t take any user input. But when you start passing input from untrusted source, that&rsquo;s when the trouble begins.</p>
 
 <p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span>
-</code></pre></div>
-</p>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></code></pre></div></p>
 
 <p>The problem is that this is vulnerable to command injection. Consider this user input.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;hello; rm -rf *&quot;</span>
-<span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
 
 <p>This will echo &lsquo;hello&rsquo;, and then remove all files from the current directory. Not so nice eh? Of course you can build your own input sanitizer that makes sure command injection will not happen.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">input_sanitizer</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">input_sanitizer</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
 
 <p>But the problem is that you have to make sure that every developer never forgets to use the sanitizer. I can&rsquo;t trust myself to never forget to do this, much less trusting that every developer will never forget.</p>
 
@@ -67,24 +61,18 @@
 
 <p><a href="http://ruby-doc.org/core-2.3.0/Kernel.html#method-i-system" target="_blank">Kernel.system</a> runs the command and returns true if the command was successful (has 0 exit status). If you pass user_input as separate arguments, it will safely escape it.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;echo&quot;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&#34;echo&#34;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span></code></pre></div>
 
 <p>Of course you can still pass the user_input interpolated in the command string and still make your code un-safe.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Don&#39;t do this please !!</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&#34;echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span> <span class="c1"># Don&#39;t do this please !!</span></code></pre></div>
 
 <p>But a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> will catch this and warn you about the vulnerability.</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ codeclimate analyze -e brakeman myapp.rb
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ codeclimate analyze -e brakeman myapp.rb
 
 <span class="o">==</span> myapp.rb <span class="o">(</span><span class="m">1</span> issue<span class="o">)</span> <span class="o">==</span>
-1-: Possible <span class="nb">command</span> injection <span class="o">[</span>brakeman<span class="o">]</span>
-</code></pre></div>
-
+<span class="m">1</span>-: Possible <span class="nb">command</span> injection <span class="o">[</span>brakeman<span class="o">]</span></code></pre></div>
 
 <p>If you notice though, <code>Kernel.system</code> does not return the output of the command the way backtick does. This leads us to the next alternative, Open3.</p>
 
@@ -98,13 +86,11 @@
 
 <p>There are many methods provided by Open3 which you can read in the documentation. For the example we&rsquo;ve been using, we can use <code>Open3.capture2</code> to replace using backtick to run a command and capture the output.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;hello; rm -rf *&quot;</span>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
 <span class="n">output</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="no">Open3</span><span class="o">.</span><span class="n">capture2</span><span class="p">(</span><span class="s1">&#39;echo&#39;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
-<span class="nb">puts</span> <span class="n">output</span>            <span class="c1"># -&gt; &quot;hello; rm -rf *\n&quot;</span>
+<span class="nb">puts</span> <span class="n">output</span>            <span class="c1"># -&gt; &#34;hello; rm -rf *\n&#34;</span>
 <span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">pid</span>        <span class="c1"># 123 or the process id</span>
-<span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">exitstatus</span> <span class="c1"># 0</span>
-</code></pre></div>
-
+<span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">exitstatus</span> <span class="c1"># 0</span></code></pre></div>
 
 <h3 id="conclusion">Conclusion</h3>
 

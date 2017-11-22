@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
+    <meta name="keywords" content="">
     <title> Using Shared Examples in RSpec &middot; hilman.io </title>
   
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://hilman.io/css/site.css">
+  <link rel="stylesheet" href="https://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
-  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://hilman.io/apple-touch-icon.png">
+  <link rel="shortcut icon" href="https://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
@@ -27,8 +27,8 @@
 <body>
 <div id="site-container">
   <ul id="site-header">
-  <li><a href="http://hilman.io/">Home</a></li>
-  <li><a href="http://hilman.io/about/">About</a></li>
+  <li><a href="https://hilman.io/">Home</a></li>
+  <li><a href="https://hilman.io/about/">About</a></li>
 </ul>
 
   <div id="site-body">
@@ -51,15 +51,15 @@ different access level to this resource.</p>
 
 <p>One way you could implement RSpec test for this is by writing separate tests for each role:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Assume we have set up the data for @editor, @viewer, @published_resource and @draft_resource</span>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="c1"># Assume we have set up the data for @editor, @viewer, @published_resource and @draft_resource</span>
 <span class="n">context</span> <span class="s1">&#39;as editor&#39;</span> <span class="k">do</span>
   <span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="p">{</span> <span class="n">make_request_as</span><span class="p">(</span><span class="vi">@editor</span><span class="p">)</span> <span class="p">}</span>
   <span class="n">it</span> <span class="s1">&#39;can view published resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@published_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@published_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect to get the resource</span>
   <span class="k">end</span>
   <span class="n">it</span> <span class="s1">&#39;can view draft resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect to get the resource</span>
   <span class="k">end</span>
 <span class="k">end</span>
@@ -67,16 +67,14 @@ different access level to this resource.</p>
 <span class="n">context</span> <span class="s1">&#39;as viewer&#39;</span> <span class="k">do</span>
   <span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="p">{</span> <span class="n">make_request_as</span><span class="p">(</span><span class="vi">@viewer</span><span class="p">)</span> <span class="p">}</span>
   <span class="n">it</span> <span class="s1">&#39;can view published resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@published_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@published_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect to get the resource</span>
   <span class="k">end</span>
   <span class="n">it</span> <span class="s1">&#39;cannot view draft resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect NOT to get the resource</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-
+<span class="k">end</span></code></pre></div>
 
 <p>There is a little duplication on testing if the user &ldquo;can view published resource&rdquo;.
 But the test is not too terrible. However, lets say you have additional requirement
@@ -91,34 +89,32 @@ to add 2 more user roles.</p>
 and duplicate the test case for viewer to test the non-logged in user.
 That is a lot of duplication. A better way is to use shared_examples.</p>
 
-<p><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">shared_examples</span> <span class="s1">&#39;user who can view published resources&#39;</span> <span class="k">do</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">shared_examples</span> <span class="s1">&#39;user who can view published resources&#39;</span> <span class="k">do</span>
   <span class="n">it</span> <span class="s1">&#39;can view published resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@published_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@published_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect to get the resource</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="n">shared_examples</span> <span class="s1">&#39;user who can view draft resources&#39;</span> <span class="k">do</span>
   <span class="n">it</span> <span class="s1">&#39;can view draft resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect to get the resource</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="n">shared_examples</span> <span class="s1">&#39;user who CANNOT view draft resources&#39;</span> <span class="k">do</span>
   <span class="n">it</span> <span class="s1">&#39;CANNOT view draft resources&#39;</span> <span class="k">do</span>
-    <span class="n">get</span> <span class="s2">&quot;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">get</span> <span class="s2">&#34;/resources/</span><span class="si">#{</span><span class="vi">@draft_resource</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span>
     <span class="c1"># expect NOT to get the resource</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-</p>
+<span class="k">end</span></code></pre></div></p>
 
 <p>shared_examples is basically a grouping of examples that can be reused in different contexts
 by including it using the <code>it_behaves_like '...'</code> method. So now we can include the right
 shared examples in each role context.</p>
 
-<p><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">context</span> <span class="s1">&#39;as editor&#39;</span> <span class="k">do</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">context</span> <span class="s1">&#39;as editor&#39;</span> <span class="k">do</span>
   <span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="p">{</span> <span class="n">make_request_as</span><span class="p">(</span><span class="vi">@editor</span><span class="p">)</span> <span class="p">}</span>
   <span class="n">it_behaves_like</span> <span class="s1">&#39;user who can view published resources&#39;</span>
   <span class="n">it_behaves_like</span> <span class="s1">&#39;user who can view draft resources&#39;</span>
@@ -139,9 +135,7 @@ shared examples in each role context.</p>
 <span class="n">context</span> <span class="s1">&#39;as non-logged in user&#39;</span> <span class="k">do</span>
   <span class="n">it_behaves_like</span> <span class="s1">&#39;user who can view published resources&#39;</span>
   <span class="n">it_behaves_like</span> <span class="s1">&#39;user who CANNOT view draft resources&#39;</span>
-<span class="k">end</span>
-</code></pre></div>
-</p>
+<span class="k">end</span></code></pre></div></p>
 
 <p>Not only it&rsquo;s less duplication, it&rsquo;s so nice to read. That&rsquo;s the beauty of RSpec :)</p>
   </div>

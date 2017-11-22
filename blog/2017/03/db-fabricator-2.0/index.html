@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
+    <meta name="keywords" content="node.js, programming, typescript, javascript">
     <title> DB Fabricator 2.0 &middot; hilman.io </title>
   
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://hilman.io/css/site.css">
+  <link rel="stylesheet" href="https://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
-  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://hilman.io/apple-touch-icon.png">
+  <link rel="shortcut icon" href="https://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
@@ -27,8 +27,8 @@
 <body>
 <div id="site-container">
   <ul id="site-header">
-  <li><a href="http://hilman.io/">Home</a></li>
-  <li><a href="http://hilman.io/about/">About</a></li>
+  <li><a href="https://hilman.io/">Home</a></li>
+  <li><a href="https://hilman.io/about/">About</a></li>
 </ul>
 
   <div id="site-body">
@@ -44,58 +44,50 @@ resulting in a somewhat verbose nested code like this:</p>
 
 <p></p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 1.0:</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">org</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 1.0:
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">org</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">id</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">dept</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">dept</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">id</span> <span class="p">});</span>
     <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">id</span> <span class="p">});</span>
   <span class="p">})</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <p>I thought, it would be nice if the fabricated attribute can be a promise, right? That&rsquo;s a good reason for
 a major update to version 2.0, because now you can do it this way:</p>
 
-<p><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 2.0:</span>
-<span class="kd">let</span> <span class="nx">org</span>  <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">dept</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="o">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span> <span class="p">});</span>
-<span class="kd">let</span> <span class="nx">bob</span>  <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">d</span> <span class="o">=&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">});</span>
-<span class="kd">let</span> <span class="nx">jane</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">d</span> <span class="o">=&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">});</span>
-</code></pre></div>
-</p>
+<p><div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 2.0:
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">org</span>  <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">dept</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="p">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span> <span class="p">});</span>
+<span class="kd">let</span> <span class="nx">bob</span>  <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">d</span> <span class="p">=&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">});</span>
+<span class="kd">let</span> <span class="nx">jane</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">d</span> <span class="p">=&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">});</span></code></pre></div></p>
 
 <p>This release deserves a major version update because there is a breaking change. In the 1.x version, when you define
 a template that depends on another fabricator, DB Fabricator assumes that you always want to get the id of the
 fabricated object.</p>
 
-<p><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 1.0:</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 1.0:
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;department&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span>
-    <span class="c1">// DB Fabricator 1.0 assumes you want to get the org.id</span>
-    <span class="nx">organizationId</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
+    <span class="c1">// DB Fabricator 1.0 assumes you want to get the org.id
+</span><span class="c1"></span>    <span class="nx">organizationId</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
   <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-</p>
+<span class="p">});</span></code></pre></div></p>
 
 <p>Now that attribute can be a promise, you can select which attribute you want to get from the fabricated object.
 So you have to do it this way:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 2.0:</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// DB Fabricator 2.0:
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;department&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span>
-    <span class="nx">organizationId</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="o">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+    <span class="nx">organizationId</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="p">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
   <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <h2 id="helper-functions">Helper Functions</h2>
 
@@ -103,26 +95,22 @@ So you have to do it this way:</p>
 
 <p><strong><code>Fabricator.fabGetId</code></strong> fabricates an object and return the id of the fabricated object.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="o">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
-<span class="c1">// is the same as</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabGetId</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="p">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+<span class="c1">// is the same as
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabGetId</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span></code></pre></div>
 
 <p><strong><code>Fabricator.getId</code></strong> returns the <code>.id</code> of a promise</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">dept</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="o">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span> <span class="p">});</span>
-<span class="c1">// is the same as</span>
-<span class="kd">let</span> <span class="nx">dept</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">(</span><span class="nx">org</span><span class="p">)</span> <span class="p">});</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">dept</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">o</span> <span class="p">=&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span> <span class="p">});</span>
+<span class="c1">// is the same as
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">dept</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">(</span><span class="nx">org</span><span class="p">)</span> <span class="p">});</span>
 
-<span class="c1">// if you use Fabricator.getId over and over again, you can alias it so it&#39;s shorter</span>
-<span class="kd">let</span> <span class="nx">getId</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">;</span>
+<span class="c1">// if you use Fabricator.getId over and over again, you can alias it so it&#39;s shorter
+</span><span class="c1"></span><span class="kd">let</span> <span class="nx">getId</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">dept1</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span>      <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">getId</span><span class="p">(</span><span class="nx">org</span><span class="p">)</span> <span class="p">});</span>
-<span class="kd">let</span> <span class="nx">dept2</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Finance&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">getId</span><span class="p">(</span><span class="nx">org</span><span class="p">)</span> <span class="p">});</span>
-</code></pre></div>
+<span class="kd">let</span> <span class="nx">dept2</span> <span class="o">=</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Finance&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">getId</span><span class="p">(</span><span class="nx">org</span><span class="p">)</span> <span class="p">});</span></code></pre></div>
 
-
-<p>That&rsquo;s all the new features on DB Fabricator 2.0. The remaining features from <a href="http://hilman.io/blog/2017/01/db-fabricator/">version 1.0</a> are still the same.
+<p>That&rsquo;s all the new features on DB Fabricator 2.0. The remaining features from <a href="https://hilman.io/blog/2017/01/db-fabricator/">version 1.0</a> are still the same.
 I hope this new version makes it even easier to set up database context for your integration test, or other things.</p>
 
 <p>Download the source code at <a href="https://github.com/reynardmh/db-fabricator.js">DB Fabricator</a> on Github,

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
+    <meta name="keywords" content="ruby, programming, grape-framework">
     <title> How to test file upload with Grape Framework &middot; hilman.io </title>
   
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://hilman.io/css/site.css">
+  <link rel="stylesheet" href="https://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
-  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://hilman.io/apple-touch-icon.png">
+  <link rel="shortcut icon" href="https://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
@@ -27,8 +27,8 @@
 <body>
 <div id="site-container">
   <ul id="site-header">
-  <li><a href="http://hilman.io/">Home</a></li>
-  <li><a href="http://hilman.io/about/">About</a></li>
+  <li><a href="https://hilman.io/">Home</a></li>
+  <li><a href="https://hilman.io/about/">About</a></li>
 </ul>
 
   <div id="site-body">
@@ -45,7 +45,7 @@ is still not as complete as Rails guide. In this post, I will discuss how to tes
 
 <p>Suppose you have an endpoint that takes a file input.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MyAPI</span><span class="o">::</span><span class="no">FileUpload</span> <span class="o">&lt;</span> <span class="no">Grape</span><span class="o">::</span><span class="no">API</span>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MyAPI</span><span class="o">::</span><span class="no">FileUpload</span> <span class="o">&lt;</span> <span class="no">Grape</span><span class="o">::</span><span class="no">API</span>
   <span class="n">desc</span> <span class="s1">&#39;Upload a file&#39;</span>
   <span class="n">params</span> <span class="k">do</span>
     <span class="nb">require</span> <span class="ss">:file</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">File</span>
@@ -60,23 +60,19 @@ is still not as complete as Rails guide. In this post, I will discuss how to tes
       <span class="ss">size</span><span class="p">:</span> <span class="n">size</span>
     <span class="p">}</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-
+<span class="k">end</span></code></pre></div>
 
 <p>How do we actually send a real file to the endpoint in your RSpec test?
 In Rails we have a <code>fixture_file_upload</code> helper.
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">post</span> <span class="ss">:upload</span><span class="p">,</span> <span class="ss">file</span><span class="p">:</span> <span class="n">fixture_file_upload</span><span class="p">(</span><span class="s1">&#39;images/image.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;image/jpg&#39;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">post</span> <span class="ss">:upload</span><span class="p">,</span> <span class="ss">file</span><span class="p">:</span> <span class="n">fixture_file_upload</span><span class="p">(</span><span class="s1">&#39;images/image.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;image/jpg&#39;</span><span class="p">)</span>
 
 <span class="c1"># Under the hood, fixture_file_upload basically creates</span>
-<span class="no">Rack</span><span class="o">::</span><span class="no">Test</span><span class="o">::</span><span class="no">UploadedFile</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;/spec/fixtures/images/image.jpg&#39;</span><span class="p">)),</span> <span class="s1">&#39;image/jpg&#39;</span><span class="p">)</span>
-</code></pre></div>
-</p>
+<span class="no">Rack</span><span class="o">::</span><span class="no">Test</span><span class="o">::</span><span class="no">UploadedFile</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;/spec/fixtures/images/image.jpg&#39;</span><span class="p">)),</span> <span class="s1">&#39;image/jpg&#39;</span><span class="p">)</span></code></pre></div></p>
 
 <p>Because Grape is just a Rack based framework, you can use the same way to test file upload.
 That is by creating an instance of <code>Rack::Test::UploadedFile</code>.</p>
 
-<p><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="no">MyAPI</span><span class="o">::</span><span class="no">FileUpload</span> <span class="k">do</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="no">RSpec</span><span class="o">.</span><span class="n">describe</span> <span class="no">MyAPI</span><span class="o">::</span><span class="no">FileUpload</span> <span class="k">do</span>
   <span class="n">it</span> <span class="s1">&#39;upload a file&#39;</span> <span class="k">do</span>
     <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/path/to/image.jpg&#39;</span>
     <span class="n">post</span> <span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="ss">file</span><span class="p">:</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Test</span><span class="o">::</span><span class="no">UploadedFile</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;image/jpeg&#39;</span><span class="p">)</span>
@@ -86,9 +82,7 @@ That is by creating an instance of <code>Rack::Test::UploadedFile</code>.</p>
     <span class="n">expect</span><span class="p">(</span><span class="n">json_response</span><span class="o">[</span><span class="ss">:type</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">&#39;image/jpeg&#39;</span><span class="p">)</span>
     <span class="n">expect</span><span class="p">(</span><span class="n">json_response</span><span class="o">[</span><span class="ss">:size</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-</p>
+<span class="k">end</span></code></pre></div></p>
   </div>
   
   <div id="disqus_thread"></div>

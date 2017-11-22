@@ -2,108 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Git on hilman.io</title>
-    <link>http://hilman.io/tags/git/index.xml</link>
+    <link>https://hilman.io/tags/git/</link>
     <description>Recent content in Git on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <atom:link href="http://hilman.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Sep 2015 20:15:26 -0400</lastBuildDate>
+    
+	<atom:link href="https://hilman.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>What you need to know about gitignore pattern</title>
-      <link>http://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</link>
+      <link>https://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</link>
       <pubDate>Mon, 07 Sep 2015 20:15:26 -0400</pubDate>
       
-      <guid>http://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
+      <guid>https://hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
       <description>&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;the-problem-i-ran-into&#34;&gt;The problem I ran into&lt;/h2&gt;
-
-&lt;p&gt;I had just moved a directory to another directory.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/some/path/doc         # old location
-/some/path/nested/doc  # new location
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Git detects that I’m deleting a bunch of files, but it doesn’t show that I’m adding any new files. I thought git just doesn’t immediately detect the new files. So I committed the changes hoping that now git will detect the new files. It still doesn’t. I wonder what happens if I just move the directory back to its original location. Technically it should revert my changes, right? But moving it back doesn’t help either, git still does not detect that there is any changes in my repository.&lt;/p&gt;
-
-&lt;p&gt;I start to suspect gitignore settings. I noticed that at some point someone added this line in gitignore&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;doc
-tmp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;That looks suspicious. I thought that just means to ignore any directory named &amp;ldquo;doc&amp;rdquo; in the root of the project. But maybe I&amp;rsquo;m wrong. So I commented out that line to see if it did anything. And it did detect that there were changes to be committed.&lt;/p&gt;
-
-&lt;p&gt;When you specify just a word without leading or trailing slash, it will match any directory or files with that name anywhere in your project. So having “doc” in .gitignore, means:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# .gitignore
-doc
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;will ignore all of these:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/doc # directory
-/doc # file
-/some/path/doc # directory
-/some/path/doc # file
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;what-if-you-just-want-to-ignore-the-directory-at-the-root-level&#34;&gt;What if you just want to ignore the directory at the root level?&lt;/h2&gt;
-
-&lt;p&gt;The correct syntax for that is to put leading and trailing slash:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# .gitignore
-/doc/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;# will ignore
-/doc # directory
-
-# will NOT ignore
-/doc         # file
-/some/doc    # directory
-/another/doc # file
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Why the need for trailing slash? If you just put leading slash, it will still ignore the doc directory at the root level, but it will also ignore a file named “doc” at the root level, if you have a file instead of a directory named “doc” at the root level.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# .gitignore
-/doc
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;will ignore&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;/doc # directory
-/doc # file
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;So what if we only include trailing slash?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# .gitignore
-doc/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;it will ignore all directory named “doc” anywhere in your project, but it will not ignore any files named “doc”&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# will ignore:
-/doc # directory
-/some/path/doc # directory
-
-# will NOT ignore:
-/another/path/doc # file
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;To ignore just directories, add a slash at the end of the pattern. Otherwise it will ignore both files and directories.&lt;/li&gt;
-&lt;li&gt;To ignore just files/directories at the root, add a slash at the beginning of the pattern. Otherwise it will ignore files/directories anywhere in your project.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;If you&amp;rsquo;re curious, check out a more detailed documentation about &lt;a href=&#34;http://git-scm.com/docs/gitignore&#34;&gt;gitignore patterns&lt;/a&gt;. These 2 basic patterns seem like a must know for most git users, so you don&amp;rsquo;t accidentally ignore more stuff than you intended to.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

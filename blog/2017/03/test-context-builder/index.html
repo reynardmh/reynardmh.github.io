@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
+    <meta name="keywords" content="node.js, programming, typescript, javascript">
     <title> Test Context Builder &middot; hilman.io </title>
   
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://hilman.io/css/site.css">
+  <link rel="stylesheet" href="https://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
-  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://hilman.io/apple-touch-icon.png">
+  <link rel="shortcut icon" href="https://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
@@ -27,8 +27,8 @@
 <body>
 <div id="site-container">
   <ul id="site-header">
-  <li><a href="http://hilman.io/">Home</a></li>
-  <li><a href="http://hilman.io/about/">About</a></li>
+  <li><a href="https://hilman.io/">Home</a></li>
+  <li><a href="https://hilman.io/about/">About</a></li>
 </ul>
 
   <div id="site-body">
@@ -48,44 +48,38 @@ top of it. This is what <em>test-context-builder</em> is for.</p>
 
 <p>Let&rsquo;s jump to example to see what it can do.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Fabricator</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;db-fabricator&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">TestContext</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;test-context-builder&#39;</span><span class="p">;</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Fabricator</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;db-fabricator&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">TestContext</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;test-context-builder&#39;</span><span class="p">;</span>
 <span class="kd">let</span> <span class="p">[</span><span class="nx">getId</span><span class="p">,</span> <span class="nx">fabricate</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">];</span>
 
-<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">local</span><span class="o">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="p">{};</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">district</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">);</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">school</span>   <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;school&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">districtId</span><span class="o">:</span> <span class="nx">getId</span><span class="p">(</span><span class="nx">local</span><span class="p">.</span><span class="nx">district</span><span class="p">)</span> <span class="p">});</span>
   <span class="k">return</span> <span class="nx">local</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <p>That example defines a context, named <code>'district'</code>, which will create a district and a school,
 when the context is loaded. You can name the context anything you want, but it has to be globally unique in your project.
 Refer to <a href="https://github.com/reynardmh/db-fabricator.js">db-fabricator</a> documentation for more detail on how to
 use DB Fabricator features. After we define the context, it can be loaded this way:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">tc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestContext</span><span class="p">();</span>
-<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">district</span><span class="p">;</span> <span class="c1">// the fabricated district object</span>
-  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">school</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">tc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestContext</span><span class="p">();</span>
+<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">district</span><span class="p">;</span> <span class="c1">// the fabricated district object
+</span><span class="c1"></span>  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">school</span><span class="p">;</span>
+<span class="p">});</span></code></pre></div>
 
 <p>Now, let&rsquo;s say you want to create a few users in that school. We can define <code>'users'</code> context that creates a teacher
 and a student.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">local</span><span class="o">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="p">{};</span>
   <span class="kd">let</span> <span class="nx">schoolId</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">schoolId</span><span class="o">:</span> <span class="nx">context</span><span class="p">.</span><span class="nx">school</span><span class="p">.</span><span class="nx">id</span> <span class="p">};</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">student</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;student&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">teacher</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;teacher&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
   <span class="k">return</span> <span class="nx">local</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <p>Notice that this context definition has <code>['district']</code> as the second argument. This means that <code>'users'</code> context
 depends on <code>'district'</code> context. When a context defines dependencies, it can assume that all objects created in
@@ -93,55 +87,45 @@ the dependencies will be loaded and accessible through the first argument passed
 In this example we can access the school by calling <code>context.school</code>. Now we can load the <code>'users'</code> context and
 have all the objects from <code>'users'</code> and <code>'district'</code> contexts loaded into <code>tc.context</code>.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">tc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestContext</span><span class="p">();</span>
-<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// will have all objects loaded by &#39;district&#39; and &#39;users&#39; context</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">tc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestContext</span><span class="p">();</span>
+<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// will have all objects loaded by &#39;district&#39; and &#39;users&#39; context
+</span><span class="c1"></span><span class="p">});</span></code></pre></div>
 
 <h2 id="loading-multiple-contexts-and-dependency-management">Loading Multiple Contexts and Dependency Management</h2>
 
 <p>You can load multiple contexts at once by passing an array of context names to <code>load</code> function.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;district1&#39;</span><span class="p">,</span> <span class="s1">&#39;district2&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// will have all objects loaded by &#39;district2&#39; and &#39;district2&#39; context</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;district1&#39;</span><span class="p">,</span> <span class="s1">&#39;district2&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// will have all objects loaded by &#39;district2&#39; and &#39;district2&#39; context
+</span><span class="c1"></span><span class="p">});</span></code></pre></div>
 
 <p>Test context builder will make sure that the same dependency will be loaded only once even when it&rsquo;s specified
 as dependency by multiple contexts.</p>
 
 <p>Let&rsquo;s say we define <code>'users2'</code> context that also depends on <code>'district'</code> context.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">local</span><span class="o">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="p">{};</span>
   <span class="kd">let</span> <span class="nx">schoolId</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">schoolId</span><span class="o">:</span> <span class="nx">context</span><span class="p">.</span><span class="nx">school</span><span class="p">.</span><span class="nx">id</span> <span class="p">};</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">student2</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;student&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">teacher2</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;teacher&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
   <span class="k">return</span> <span class="nx">local</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <p>We can load both <code>'users'</code> and <code>'users2'</code> context, and have <code>'district'</code> context be loaded only once. So all users
 will be created with the same school and district.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// will have all objects loaded by &#39;users&#39;, &#39;users2&#39; and &#39;district&#39; context</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// will have all objects loaded by &#39;users&#39;, &#39;users2&#39; and &#39;district&#39; context
+</span><span class="c1"></span><span class="p">});</span></code></pre></div>
 
 <p>You can even pass <code>'district'</code> to the <code>load</code> function and the result will be the same.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// these all do the same thing</span>
-<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]);</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// these all do the same thing
+</span><span class="c1"></span><span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]);</span>
 <span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;district&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]);</span>
-<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users2&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;district&#39;</span><span class="p">]);</span> <span class="c1">// order does not matter</span>
-</code></pre></div>
-
+<span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users2&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;district&#39;</span><span class="p">]);</span> <span class="err">// order does not matter</span></code></pre></div>
 
 <h2 id="how-is-this-really-used">How is this really used?</h2>
 
@@ -149,21 +133,21 @@ will be created with the same school and district.</p>
 
 <p>Here is some example of what my mocha test looks like with Test Context Builder and DB Fabricator.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// shared-context.ts</span>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// shared-context.ts
+</span><span class="c1"></span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Fabricator</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;db-fabricator&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">TestContext</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;test-context-builder&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;./fabricators.ts&#39;</span><span class="p">;</span> <span class="c1">// assume this defines the fabricator templates
+</span><span class="c1"></span><span class="kd">let</span> <span class="p">[</span><span class="nx">getId</span><span class="p">,</span> <span class="nx">fabricate</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">];</span>
 
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Fabricator</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;db-fabricator&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">TestContext</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;test-context-builder&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="s1">&#39;./fabricators.ts&#39;</span><span class="p">;</span> <span class="c1">// assume this defines the fabricator templates</span>
-<span class="kd">let</span> <span class="p">[</span><span class="nx">getId</span><span class="p">,</span> <span class="nx">fabricate</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">getId</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">];</span>
-
-<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">local</span><span class="o">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="p">{};</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">district</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;district&#39;</span><span class="p">);</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">school</span>   <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;school&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">districtId</span><span class="o">:</span> <span class="nx">getId</span><span class="p">(</span><span class="nx">local</span><span class="p">.</span><span class="nx">district</span><span class="p">)</span> <span class="p">});</span>
   <span class="k">return</span> <span class="nx">local</span><span class="p">;</span>
 <span class="p">});</span>
 
-<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">local</span><span class="o">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="p">{};</span>
   <span class="kd">let</span> <span class="nx">schoolId</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">schoolId</span><span class="o">:</span> <span class="nx">context</span><span class="p">.</span><span class="nx">school</span><span class="p">.</span><span class="nx">id</span> <span class="p">};</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">student</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;student&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
@@ -171,34 +155,32 @@ will be created with the same school and district.</p>
   <span class="k">return</span> <span class="nx">local</span><span class="p">;</span>
 <span class="p">});</span>
 
-<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">TestContext</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s1">&#39;users2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;district&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">local</span><span class="o">:</span> <span class="nx">any</span> <span class="o">=</span> <span class="p">{};</span>
   <span class="kd">let</span> <span class="nx">schoolId</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">schoolId</span><span class="o">:</span> <span class="nx">context</span><span class="p">.</span><span class="nx">school</span><span class="p">.</span><span class="nx">id</span> <span class="p">};</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">student2</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;student&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
   <span class="nx">local</span><span class="p">.</span><span class="nx">teacher2</span> <span class="o">=</span> <span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;teacher&#39;</span><span class="p">,</span> <span class="nx">schoolId</span><span class="p">);</span>
   <span class="k">return</span> <span class="nx">local</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
-
-<p><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// sometest.spec.ts</span>
-
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">TestContext</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;test-context-builder&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="s1">&#39;./shared-context.ts&#39;</span><span class="p">;</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// sometest.spec.ts
+</span><span class="c1"></span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">TestContext</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;test-context-builder&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;./shared-context.ts&#39;</span><span class="p">;</span>
 
 <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;Some test&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">tc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestContext</span><span class="p">();</span>
   <span class="kd">let</span> <span class="nx">context</span><span class="p">;</span>
   <span class="nx">before</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// sometime when you have a lot of data to load, it takes more than the timeout limit</span>
-    <span class="c1">// you can set timeout just for the before function</span>
-    <span class="c1">// this will not change timeout for each individual test</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-    <span class="c1">// Clean database before loading test context</span>
-    <span class="k">return</span> <span class="nx">dbCleaner</span><span class="p">.</span><span class="nx">clean</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nx">context</span> <span class="o">=</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// just for shortcut</span>
-      <span class="p">});</span>
+    <span class="c1">// sometime when you have a lot of data to load, it takes more than the timeout limit
+</span><span class="c1"></span>    <span class="c1">// you can set timeout just for the before function
+</span><span class="c1"></span>    <span class="c1">// this will not change timeout for each individual test
+</span><span class="c1"></span>    <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="c1">// Clean database before loading test context
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">dbCleaner</span><span class="p">.</span><span class="nx">clean</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">context</span> <span class="o">=</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// just for shortcut
+</span><span class="c1"></span>      <span class="p">});</span>
     <span class="p">});</span>
   <span class="p">});</span>
   
@@ -211,19 +193,17 @@ will be created with the same school and district.</p>
   <span class="kd">let</span> <span class="nx">tc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestContext</span><span class="p">();</span>
   <span class="kd">let</span> <span class="nx">context</span><span class="p">;</span>
   <span class="nx">before</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">dbCleaner</span><span class="p">.</span><span class="nx">clean</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nx">context</span> <span class="o">=</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// just for shortcut</span>
-      <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">dbCleaner</span><span class="p">.</span><span class="nx">clean</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">load</span><span class="p">([</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;users2&#39;</span><span class="p">]).</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">context</span> <span class="o">=</span> <span class="nx">tc</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span> <span class="c1">// just for shortcut
+</span><span class="c1"></span>      <span class="p">});</span>
     <span class="p">});</span>
   <span class="p">});</span>
   
   <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;works&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">student</span><span class="p">.</span><span class="nx">schoolId</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">student2</span><span class="p">.</span><span class="nx">schoolId</span><span class="p">);</span>
   <span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
-</p>
+<span class="p">});</span></code></pre></div></p>
 
 <h2 id="installing">Installing</h2>
 

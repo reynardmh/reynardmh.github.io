@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="//gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="keywords" content="blog, programming, software development">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
   
+    <meta name="keywords" content="node.js, programming, typescript, javascript">
     <title> Introducing DB Fabricator &middot; hilman.io </title>
   
 
   
-  <link rel="stylesheet" href="http://hilman.io//css/site.css">
-  <link rel="stylesheet" href="http://hilman.io/css/zenburn-hilite.css">
+  <link rel="stylesheet" href="https://hilman.io/css/site.css">
+  <link rel="stylesheet" href="https://hilman.io/css/zenburn-hilite.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://hilman.io/apple-touch-icon.png">
-  <link rel="shortcut icon" href="http://hilman.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://hilman.io/apple-touch-icon.png">
+  <link rel="shortcut icon" href="https://hilman.io/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
@@ -27,8 +27,8 @@
 <body>
 <div id="site-container">
   <ul id="site-header">
-  <li><a href="http://hilman.io/">Home</a></li>
-  <li><a href="http://hilman.io/about/">About</a></li>
+  <li><a href="https://hilman.io/">Home</a></li>
+  <li><a href="https://hilman.io/about/">About</a></li>
 </ul>
 
   <div id="site-body">
@@ -53,22 +53,18 @@ the template attributes.</p>
 
 <p>Here is an example of defining a template for user object. The template name is the table name in database.</p>
 
-<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span>
     <span class="nx">lastName</span><span class="o">:</span> <span class="s1">&#39;Smith&#39;</span><span class="p">,</span>
   <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <p>Now, we can create new rows in the user table:</p>
 
-<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="c1">// Bob Smith</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span> <span class="p">});</span> <span class="c1">// Jane Smith</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="c1">// Bob Smith
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span> <span class="p">});</span> <span class="err">// Jane Smith</span></code></pre></div>
 
 <h2 id="composable-attributes">Composable Attributes</h2>
 
@@ -79,19 +75,17 @@ composed from the other attributes, by setting the attribute as a function that 
 argument which is the object being created. The value returned from that function will be set
 to the attribute.</p>
 
-<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span>
     <span class="nx">lastName</span><span class="o">:</span> <span class="s1">&#39;Smith&#39;</span><span class="p">,</span>
-    <span class="nx">username</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">obj</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}.</span><span class="nx">$</span><span class="p">{</span><span class="nx">obj</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="err">`</span>
+    <span class="nx">username</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`</span><span class="si">${</span><span class="nx">obj</span><span class="p">.</span><span class="nx">firstName</span><span class="si">}</span><span class="sb">.</span><span class="si">${</span><span class="nx">obj</span><span class="p">.</span><span class="nx">lastName</span><span class="si">}</span><span class="sb">`</span>
   <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="c1">// username: Bob.Smith</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span> <span class="p">});</span> <span class="c1">// username: Jane.Smith</span>
-</code></pre></div>
-
+<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="c1">// username: Bob.Smith
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span> <span class="p">});</span> <span class="err">// username: Jane.Smith</span></code></pre></div>
 
 <h2 id="nested-dependencies">Nested Dependencies</h2>
 
@@ -102,7 +96,7 @@ just a user. To make this simpler, DB Fabricator lets you define the template to
 create the dependencies unless it&rsquo;s overriden. By setting the attribute as a function that
 fabricate another object.</p>
 
-<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;organization&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Fabricator Inc&#39;</span>
@@ -120,36 +114,32 @@ fabricate another object.</p>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span>
     <span class="nx">lastName</span><span class="o">:</span> <span class="s1">&#39;Smith&#39;</span><span class="p">,</span>
-    <span class="nx">username</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">obj</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}.</span><span class="nx">$</span><span class="p">{</span><span class="nx">obj</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="err">`</span><span class="p">,</span>
+    <span class="nx">username</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="sb">`</span><span class="si">${</span><span class="nx">obj</span><span class="p">.</span><span class="nx">firstName</span><span class="si">}</span><span class="sb">.</span><span class="si">${</span><span class="nx">obj</span><span class="p">.</span><span class="nx">lastName</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span>
     <span class="nx">departmentId</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="c1">// this will create a department, an organization and a user &#39;Bob Smith&#39;</span>
-</code></pre></div>
-
+<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="err">// this will create a department, an organization and a user &#39;Bob Smith&#39;</span></code></pre></div>
 
 <p>You can still create the dependencies instead of using the default from template.
 For example, if you need to create a few users that have the same department. Note that, because of the
 async nature of node.js, <code>Fabricator.fabricate</code> returns a promise.</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
-<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">org</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;organization&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">org</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;IT&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">id</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">dept</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">dept</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">id</span> <span class="p">});</span>
     <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">id</span> <span class="p">});</span>
   <span class="p">})</span>
   <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Marketing&#39;</span><span class="p">,</span> <span class="nx">organizationId</span><span class="o">:</span> <span class="nx">org</span><span class="p">.</span><span class="nx">id</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">dept</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">dept</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Jon&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">id</span> <span class="p">});</span>
     <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="nx">departmentId</span><span class="o">:</span> <span class="nx">dept</span><span class="p">.</span><span class="nx">id</span> <span class="p">});</span>
   <span class="p">})</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
-
-<p><strong>Update:</strong> Version 2.0 provides a more straightforward way to do the above. See <a href="http://hilman.io/blog/2017/03/db-fabricator-2.0/">DB Fabricator version 2.0</a></p>
+<p><strong>Update:</strong> Version 2.0 provides a more straightforward way to do the above. See <a href="https://hilman.io/blog/2017/03/db-fabricator-2.0/">DB Fabricator version 2.0</a></p>
 
 <h2 id="nested-templates">Nested Templates</h2>
 
@@ -158,27 +148,25 @@ types: &lsquo;student&rsquo; and &lsquo;teacher&rsquo;. A teacher needs to have 
 student email should look like &lsquo;username@student.school.edu&rsquo;. We can set the type and email everytime we create a
 user.</p>
 
-<p><div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span>
   <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;teacher&#39;</span><span class="p">,</span>
-  <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@teacher.school.edu`</span> <span class="p">}</span>
+  <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@teacher.school.edu`</span> <span class="p">}</span>
 <span class="p">});</span>
 <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="p">{</span>
   <span class="nx">firstName</span><span class="o">:</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;student&#39;</span><span class="p">,</span>
-  <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@student.school.edu`</span> <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-</p>
+  <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@student.school.edu`</span> <span class="p">}</span>
+<span class="p">});</span></code></pre></div></p>
 
 <p>But a more convenient way is to define a template for each user type. The template can be derived from the basic
 user template to minimize duplication. Just set the <code>from</code> attribute to the template name when defining a template.
 In this example the <code>from</code> is set to <code>'user'</code>.</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;user-teacher&#39;</span><span class="p">,</span>
   <span class="nx">from</span><span class="o">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;teacher&#39;</span><span class="p">,</span>
-    <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@teacher.school.edu`</span> <span class="p">}</span>
+    <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@teacher.school.edu`</span> <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">});</span>
 <span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
@@ -186,26 +174,22 @@ In this example the <code>from</code> is set to <code>'user'</code>.</p>
   <span class="nx">from</span><span class="o">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;student&#39;</span><span class="p">,</span>
-    <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@student.school.edu`</span> <span class="p">}</span>
+    <span class="nx">email</span><span class="o">:</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="sb">`</span><span class="si">${</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">@student.school.edu`</span> <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user-teacher&#39;</span><span class="p">,{</span><span class="nx">firstName</span><span class="o">:</span><span class="s1">&#39;Bob&#39;</span><span class="p">});</span> <span class="c1">//email:Bob.Smith@teacher.school.edu</span>
-<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user-student&#39;</span><span class="p">,{</span><span class="nx">firstName</span><span class="o">:</span><span class="s1">&#39;Joe&#39;</span><span class="p">});</span> <span class="c1">//email:Joe.Smith@student.school.edu</span>
-</code></pre></div>
-
+<span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user-teacher&#39;</span><span class="p">,{</span><span class="nx">firstName</span><span class="o">:</span><span class="s1">&#39;Bob&#39;</span><span class="p">});</span> <span class="c1">//email:Bob.Smith@teacher.school.edu
+</span><span class="c1"></span><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">fabricate</span><span class="p">(</span><span class="s1">&#39;user-student&#39;</span><span class="p">,{</span><span class="nx">firstName</span><span class="o">:</span><span class="s1">&#39;Joe&#39;</span><span class="p">});</span> <span class="err">//email:Joe.Smith@student.school.edu</span></code></pre></div>
 
 <p>Template can be deeply nested. For example, we can define a template from &lsquo;user-student&rsquo;.</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">Fabricator</span><span class="p">.</span><span class="nx">template</span><span class="p">({</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;user-student-1st-grade&#39;</span><span class="p">,</span>
   <span class="nx">from</span><span class="o">:</span> <span class="s1">&#39;user-student&#39;</span><span class="p">,</span>
   <span class="nx">attr</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">gradeLevel</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span>
   <span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 
 <h2 id="extensible">Extensible</h2>
 
