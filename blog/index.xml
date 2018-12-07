@@ -81,7 +81,7 @@ different access level to this resource.&lt;/p&gt;
     </item>
     
     <item>
-      <title>Tempfile and Garbage Collection</title>
+      <title>Ruby Tempfile and Garbage Collection</title>
       <link>https://www.hilman.io/blog/2016/01/tempfile/</link>
       <pubDate>Sun, 31 Jan 2016 21:07:34 -0500</pubDate>
       
