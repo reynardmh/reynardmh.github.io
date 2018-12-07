@@ -47,9 +47,11 @@
 <div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
 <span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
 
-<p>This will echo &lsquo;hello&rsquo;, and then remove all files from the current directory. Not so nice eh? Of course you can build your own input sanitizer that makes sure command injection will not happen.</p>
+<p>This will echo &lsquo;hello&rsquo;, and then remove all files from the current directory. Not so nice eh? Of course you can use Ruby&rsquo;s <code>shellescape</code> method to sanitize the input.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">input_sanitizer</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;shellwords&#39;</span>
+<span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="o">.</span><span class="n">shellescape</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
 
 <p>But the problem is that you have to make sure that every developer never forgets to use the sanitizer. I can&rsquo;t trust myself to never forget to do this, much less trusting that every developer will never forget.</p>
 
@@ -128,7 +130,7 @@ ga('send', 'pageview');
 
 
 <div id="footer">
-  &copy; 2017 Reynard Hilman
+  &copy; 2018 Reynard Hilman
 </div>
 </div> 
 </body>
