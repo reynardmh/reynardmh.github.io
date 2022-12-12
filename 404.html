@@ -22,7 +22,7 @@
   <link rel="shortcut icon" href="https://www.hilman.io/favicon.png">
 
   
-  <link href="https://www.hilman.io/index.xml" rel="alternate" type="application/rss+xml" title="hilman.io" />
+  
 </head>
 <body>
 <div id="site-container">
@@ -33,6 +33,7 @@
 
   <div id="site-body">
 
+
 <div class="content container">
   <h1>404: Page not found</h1>
     <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="https://www.hilman.io/">Head back home</a> to try finding it again.</p>
@@ -41,19 +42,20 @@
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W08R0JZ35R"></script>
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-67204370-1', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-W08R0JZ35R', { 'anonymize_ip': false });
+}
 </script>
 
 
 <div id="footer">
-  &copy; 2018 Reynard Hilman
+  &copy; 2022 Reynard Hilman
 </div>
 </div> 
 </body>

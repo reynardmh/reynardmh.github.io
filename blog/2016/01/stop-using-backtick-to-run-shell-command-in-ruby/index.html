@@ -22,7 +22,7 @@
   <link rel="shortcut icon" href="https://www.hilman.io/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
+  
 </head>
 <body>
 <div id="site-container">
@@ -33,104 +33,69 @@
 
   <div id="site-body">
 
+
 <div class="content container">
   <div class="post">
     <h1>Stop using backtick to run shell command in Ruby</h1>
     <span class="post-date">Sat, Jan 23, 2016</span>
     <p>It&rsquo;s all too common to find the use of backtick to run shell command from Ruby. It&rsquo;s fine when you just run a command that doesn&rsquo;t take any user input. But when you start passing input from untrusted source, that&rsquo;s when the trouble begins.</p>
-
-<p>
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></code></pre></div></p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></span></span></code></pre></div>
 <p>The problem is that this is vulnerable to command injection. Consider this user input.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
-<span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="sb">`</span></span></span></code></pre></div>
 <p>This will echo &lsquo;hello&rsquo;, and then remove all files from the current directory. Not so nice eh? Of course you can use Ruby&rsquo;s <code>shellescape</code> method to sanitize the input.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;shellwords&#39;</span>
-<span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
-<span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="o">.</span><span class="n">shellescape</span><span class="si">}</span><span class="sb">`</span></code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="nb">require</span> <span class="s1">&#39;shellwords&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span> <span class="o">=</span> <span class="sb">`echo </span><span class="si">#{</span><span class="n">user_input</span><span class="o">.</span><span class="n">shellescape</span><span class="si">}</span><span class="sb">`</span></span></span></code></pre></div>
 <p>But the problem is that you have to make sure that every developer never forgets to use the sanitizer. I can&rsquo;t trust myself to never forget to do this, much less trusting that every developer will never forget.</p>
-
 <h2 id="so-what-are-the-alternatives">So what are the alternatives?</h2>
-
 <p>There are a few Ruby built in methods that automatically handle this.</p>
-
-<h3 id="kernel-system">Kernel.system</h3>
-
-<p><a href="http://ruby-doc.org/core-2.3.0/Kernel.html#method-i-system" target="_blank">Kernel.system</a> runs the command and returns true if the command was successful (has 0 exit status). If you pass user_input as separate arguments, it will safely escape it.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&#34;echo&#34;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span></code></pre></div>
-
+<h3 id="kernelsystem">Kernel.system</h3>
+<p><!-- raw HTML omitted -->Kernel.system<!-- raw HTML omitted --> runs the command and returns true if the command was successful (has 0 exit status). If you pass user_input as separate arguments, it will safely escape it.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="nb">system</span><span class="p">(</span><span class="s2">&#34;echo&#34;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span></span></span></code></pre></div>
 <p>Of course you can still pass the user_input interpolated in the command string and still make your code un-safe.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">&#34;echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span> <span class="c1"># Don&#39;t do this please !!</span></code></pre></div>
-
-<p>But a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> will catch this and warn you about the vulnerability.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ codeclimate analyze -e brakeman myapp.rb
-
-<span class="o">==</span> myapp.rb <span class="o">(</span><span class="m">1</span> issue<span class="o">)</span> <span class="o">==</span>
-<span class="m">1</span>-: Possible <span class="nb">command</span> injection <span class="o">[</span>brakeman<span class="o">]</span></code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="nb">system</span><span class="p">(</span><span class="s2">&#34;echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span> <span class="c1"># Don&#39;t do this please !!</span></span></span></code></pre></div>
+<p>But a static code analysis tool like <!-- raw HTML omitted -->codeclimate brakeman<!-- raw HTML omitted --> will catch this and warn you about the vulnerability.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ codeclimate analyze -e brakeman myapp.rb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span> myapp.rb <span class="o">(</span><span class="m">1</span> issue<span class="o">)</span> <span class="o">==</span>
+</span></span><span class="line"><span class="cl">1-: Possible <span class="nb">command</span> injection <span class="o">[</span>brakeman<span class="o">]</span></span></span></code></pre></div>
 <p>If you notice though, <code>Kernel.system</code> does not return the output of the command the way backtick does. This leads us to the next alternative, Open3.</p>
-
 <h3 id="open3-module">Open3 module</h3>
-
-<p>From <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/open3/rdoc/Open3.html" target="_blank">Open3 documentation</a>:</p>
-
+<p>From <!-- raw HTML omitted -->Open3 documentation<!-- raw HTML omitted -->:</p>
 <blockquote>
 <p>Open3 grants you access to stdin, stdout, stderr and a thread to wait for the child process when running another program.</p>
 </blockquote>
-
 <p>There are many methods provided by Open3 which you can read in the documentation. For the example we&rsquo;ve been using, we can use <code>Open3.capture2</code> to replace using backtick to run a command and capture the output.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
-<span class="n">output</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="no">Open3</span><span class="o">.</span><span class="n">capture2</span><span class="p">(</span><span class="s1">&#39;echo&#39;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
-<span class="nb">puts</span> <span class="n">output</span>            <span class="c1"># -&gt; &#34;hello; rm -rf *\n&#34;</span>
-<span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">pid</span>        <span class="c1"># 123 or the process id</span>
-<span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">exitstatus</span> <span class="c1"># 0</span></code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">&#34;hello; rm -rf *&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="no">Open3</span><span class="o">.</span><span class="n">capture2</span><span class="p">(</span><span class="s1">&#39;echo&#39;</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">puts</span> <span class="n">output</span>            <span class="c1"># -&gt; &#34;hello; rm -rf *\n&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">pid</span>        <span class="c1"># 123 or the process id</span>
+</span></span><span class="line"><span class="cl"><span class="nb">puts</span> <span class="n">status</span><span class="o">.</span><span class="n">exitstatus</span> <span class="c1"># 0</span></span></span></code></pre></div>
 <h3 id="conclusion">Conclusion</h3>
-
-<p>It&rsquo;s OK to use backtick when you don&rsquo;t have any user input. But when you start passing untrusted input it&rsquo;s best to always use <code>system</code> or <code>Open3</code> to sanitize the input. It&rsquo;s also strongly recommended to use a static code analysis tool like <a href="https://docs.codeclimate.com/docs/brakeman" target="_blank">codeclimate brakeman</a> to make sure no developer in your team forget to follow this best practice.</p>
+<p>It&rsquo;s OK to use backtick when you don&rsquo;t have any user input. But when you start passing untrusted input it&rsquo;s best to always use <code>system</code> or <code>Open3</code> to sanitize the input. It&rsquo;s also strongly recommended to use a static code analysis tool like <!-- raw HTML omitted -->codeclimate brakeman<!-- raw HTML omitted --> to make sure no developer in your team forget to follow this best practice.</p>
   </div>
   
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-     
-    var disqus_shortname = 'hilmanio';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
   
 </div>
 </div> 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W08R0JZ35R"></script>
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-67204370-1', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-W08R0JZ35R', { 'anonymize_ip': false });
+}
 </script>
 
 
 <div id="footer">
-  &copy; 2018 Reynard Hilman
+  &copy; 2022 Reynard Hilman
 </div>
 </div> 
 </body>

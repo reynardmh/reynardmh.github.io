@@ -1,17 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Node.js on hilman.io</title>
+    <title>node.js on hilman.io</title>
     <link>https://www.hilman.io/tags/node.js/</link>
-    <description>Recent content in Node.js on hilman.io</description>
+    <description>Recent content in node.js on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Sat, 25 Mar 2017 22:08:05 -0400</lastBuildDate>
-    
-	<atom:link href="https://www.hilman.io/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 25 Mar 2017 22:08:05 -0400</lastBuildDate><atom:link href="https://www.hilman.io/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Test Context Builder</title>
       <link>https://www.hilman.io/blog/2017/03/test-context-builder/</link>
@@ -23,9 +19,7 @@ complement &lt;a href=&#34;https://github.com/reynardmh/db-fabricator.js&#34;&gt
 is to setup test context data for integration testing. However, setting up test context data gets repetitive and
 verbose for each test. In many cases you have the same basic object that most of your tests need. So it would be
 nice to be able to define a set of basic contexts that you often use and be able to build on
-top of it. This is what &lt;em&gt;test-context-builder&lt;/em&gt; is for.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+top of it. This is what &lt;em&gt;test-context-builder&lt;/em&gt; is for.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -37,9 +31,7 @@ top of it. This is what &lt;em&gt;test-context-builder&lt;/em&gt; is for.&lt;/p&
       <description>&lt;p&gt;It hasn&amp;rsquo;t been that long since I released DB Fabricator version 1.0. But I quickly realized the limitation as I use it more
 on my project. The biggest annoyance is the fact that when you want to fabricate an object that depends on another
 fabricated object, you have to fabricate the dependency after resolving the root object promise,
-resulting in a somewhat verbose nested code like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+resulting in a somewhat verbose nested code like this:&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -50,9 +42,7 @@ resulting in a somewhat verbose nested code like this:&lt;/p&gt;
       <guid>https://www.hilman.io/blog/2017/01/db-fabricator/</guid>
       <description>&lt;p&gt;When writing end to end tests, we often need to set up a context by creating some data in database.
 Each test case should start with a clean slate and have data that are created only for that test.
-So it&amp;rsquo;s important to make creating these test data as simple as possible.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+So it&amp;rsquo;s important to make creating these test data as simple as possible.&lt;/p&gt;</description>
     </item>
     
   </channel>

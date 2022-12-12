@@ -22,7 +22,7 @@
   <link rel="shortcut icon" href="https://www.hilman.io/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
+  
 </head>
 <body>
 <div id="site-container">
@@ -33,71 +33,53 @@
 
   <div id="site-body">
 
+
 <div class="content container">
   <div class="post">
     <h1>Helper to print out your ActiveRecord SQL</h1>
     <span class="post-date">Tue, Mar 15, 2016</span>
     <p>Sometime you just want to see the SQL statement that your ActiveRecord magically generate, without going through hundreds of lines in your log file. An easy way to do that is to assign the <code>ActiveRecord::Base.logger</code> to a new <code>Logger</code> that prints to the <code>STDOUT</code>, and then change it back to the old logger so it doesn&rsquo;t keep printing out SQL for the rest of your code.</p>
-
-<p></p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">ol</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span>
-<span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
-<span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="o"></span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>
-<span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">ol</span></code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">ol</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span>
+</span></span><span class="line"><span class="cl"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>
+</span></span><span class="line"><span class="cl"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">ol</span></span></span></code></pre></div>
 <p>We can go further and add this helper method to your <code>ActiveRecord::Base</code>.</p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">PrintOutSql</span>
-  <span class="k">def</span> <span class="nc"></span><span class="o"></span><span class="nf">print_sql</span><span class="p">(</span><span class="n">dest</span> <span class="o">=</span> <span class="no">STDOUT</span><span class="p">)</span>
-    <span class="n">ol</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span>
-    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
-    <span class="k">yield</span>
-    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">ol</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-<span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="no">PrintOutSql</span><span class="p">)</span></code></pre></div></p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">module</span> <span class="nn">PrintOutSql</span>
+</span></span><span class="line"><span class="cl">  <span class="k">def</span> <span class="nf">print_sql</span><span class="p">(</span><span class="n">dest</span> <span class="o">=</span> <span class="no">STDOUT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ol</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span>
+</span></span><span class="line"><span class="cl">    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">yield</span>
+</span></span><span class="line"><span class="cl">    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">ol</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="no">PrintOutSql</span><span class="p">)</span></span></span></code></pre></div>
 <p>So you can just wrap your code inside the print_sql block, and it will print out all SQL statements that were executed inside that block only.</p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="c1"># assuming User is an ActiveRecord::Base</span>
-<span class="no">User</span><span class="o">.</span><span class="n">print_sql</span> <span class="k">do</span>
-  <span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="o"></span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>
-<span class="k">end</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="c1"># assuming User is an ActiveRecord::Base</span>
+</span></span><span class="line"><span class="cl"><span class="no">User</span><span class="o">.</span><span class="n">print_sql</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="no">User</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span></span></span></code></pre></div>
   </div>
   
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-     
-    var disqus_shortname = 'hilmanio';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
   
 </div>
 </div> 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W08R0JZ35R"></script>
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-67204370-1', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-W08R0JZ35R', { 'anonymize_ip': false });
+}
 </script>
 
 
 <div id="footer">
-  &copy; 2018 Reynard Hilman
+  &copy; 2022 Reynard Hilman
 </div>
 </div> 
 </body>

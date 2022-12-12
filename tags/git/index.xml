@@ -1,26 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Git on hilman.io</title>
+    <title>git on hilman.io</title>
     <link>https://www.hilman.io/tags/git/</link>
-    <description>Recent content in Git on hilman.io</description>
+    <description>Recent content in git on hilman.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Mon, 07 Sep 2015 20:15:26 -0400</lastBuildDate>
-    
-	<atom:link href="https://www.hilman.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 07 Sep 2015 20:15:26 -0400</lastBuildDate><atom:link href="https://www.hilman.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What you need to know about gitignore pattern</title>
       <link>https://www.hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</link>
       <pubDate>Mon, 07 Sep 2015 20:15:26 -0400</pubDate>
       
       <guid>https://www.hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</guid>
-      <description>&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;After using git for a long time, I thought I knew the basic of gitignore well enough, until I ran into problem with my files not getting committed. There were some basic gitignore patterns that most git users are just not aware of. So some of us might have put something on gitignore without realizing that it does ignore a lot more stuff than we intend.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -22,7 +22,7 @@
   <link rel="shortcut icon" href="https://www.hilman.io/favicon.png">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="hilman.io" />
+  
 </head>
 <body>
 <div id="site-container">
@@ -33,87 +33,66 @@
 
   <div id="site-body">
 
+
 <div class="content container">
   <div class="post">
     <h1>Ruby Tempfile and Garbage Collection</h1>
     <span class="post-date">Sun, Jan 31, 2016</span>
-    <p>Tempfile gives you an easy way to quickly create a temporary file without having to worry about generating a file name that doesn’t already exist and cleaning up the file after you are done. However, you have to be aware that the temporary file will be deleted when the tempfile instance is garbage collected.
-</p>
-
-<p>From ruby <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/tempfile/rdoc/Tempfile.html" target="blank">Tempfile</a> documentation</p>
-
+    <p>Tempfile gives you an easy way to quickly create a temporary file without having to worry about generating a file name that doesn’t already exist and cleaning up the file after you are done. However, you have to be aware that the temporary file will be deleted when the tempfile instance is garbage collected.</p>
+<p>From ruby <!-- raw HTML omitted -->Tempfile<!-- raw HTML omitted --> documentation</p>
 <blockquote>
 <p>When a Tempfile object is garbage collected, or when the Ruby interpreter exits, its associated temporary file is automatically deleted.</p>
 </blockquote>
-
 <p>Here is an example that will cause intermittent problem</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="c1"># create tempfile and return the path</span>
-<span class="k">def</span> <span class="nc"></span><span class="o"></span><span class="nf">create_tempfile</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-  <span class="n">tmpfile</span> <span class="o">=</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">new</span>
-  <span class="n">tmpfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-  <span class="n">tmpfile</span><span class="o">.</span><span class="n">close</span> <span class="c1"># so it will actually write the content to disk</span>
-  <span class="n">tmpfile</span><span class="o">.</span><span class="n">path</span>
-<span class="k">end</span>
-
-<span class="n">path</span> <span class="o">=</span> <span class="n">create_tempfile</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="err">’</span><span class="p">)</span>
-
-<span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="c1"># create tempfile and return the path</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create_tempfile</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span> <span class="o">=</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">new</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span><span class="o">.</span><span class="n">close</span> <span class="c1"># so it will actually write the content to disk</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span><span class="o">.</span><span class="n">path</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">path</span> <span class="o">=</span> <span class="n">create_tempfile</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="err">’</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></span></span></code></pre></div>
 <p>In some cases you would get an error that the file does not exist. Because what gets returned from the create_tempfile method is the tempfile path, so tempfile is no longer referenced anywhere once <code>create_tempfile</code> is done. When garbage collector runs, it will cleanup tmpfile and also delete the file.</p>
-
 <p>You can test this by manually starting the garbage collector, and always get an error when trying to read the file.</p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="n">path</span> <span class="o">=</span> <span class="n">create_tempfile</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="err">’</span><span class="p">)</span>
-<span class="no">GC</span><span class="o">.</span><span class="n">start</span>
-<span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code></pre></div></p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">path</span> <span class="o">=</span> <span class="n">create_tempfile</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="err">’</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="no">GC</span><span class="o">.</span><span class="n">start</span>
+</span></span><span class="line"><span class="cl"><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></span></span></code></pre></div>
 <p>In order to avoid this issue, you need to return the tmpfile instance. So as long as your code still references the tempfile instance, it will not be garbage collected.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nc"></span><span class="o"></span><span class="nf">create_tempfile</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-  <span class="n">tmpfile</span> <span class="o">=</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">new</span>
-  <span class="n">tmpfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-  <span class="n">tmpfile</span><span class="o">.</span><span class="n">close</span>
-  <span class="n">tmpfile</span>
-<span class="k">end</span>
-
-<span class="n">file</span> <span class="o">=</span> <span class="n">create_tempfile</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="err">’</span><span class="p">)</span>
-<span class="no">GC</span><span class="o">.</span><span class="n">start</span>
-<span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="c1"># this will work even after garbage collection ran</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create_tempfile</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span> <span class="o">=</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">new</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span><span class="o">.</span><span class="n">close</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tmpfile</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">file</span> <span class="o">=</span> <span class="n">create_tempfile</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="err">’</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="no">GC</span><span class="o">.</span><span class="n">start</span>
+</span></span><span class="line"><span class="cl"><span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="c1"># this will work even after garbage collection ran</span></span></span></code></pre></div>
   </div>
   
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-     
-    var disqus_shortname = 'hilmanio';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
   
 </div>
 </div> 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W08R0JZ35R"></script>
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-67204370-1', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-W08R0JZ35R', { 'anonymize_ip': false });
+}
 </script>
 
 
 <div id="footer">
-  &copy; 2018 Reynard Hilman
+  &copy; 2022 Reynard Hilman
 </div>
 </div> 
 </body>

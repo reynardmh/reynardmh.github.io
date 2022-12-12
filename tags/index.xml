@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on hilman.io</title>
@@ -7,31 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Reynard Hilman</copyright>
-    <lastBuildDate>Mon, 07 Sep 2015 20:15:26 -0400</lastBuildDate>
-    
-	<atom:link href="https://www.hilman.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 25 Mar 2017 22:08:05 -0400</lastBuildDate><atom:link href="https://www.hilman.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Git</title>
-      <link>https://www.hilman.io/tags/git/</link>
-      <pubDate>Mon, 07 Sep 2015 20:15:26 -0400</pubDate>
-      
-      <guid>https://www.hilman.io/tags/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Grape Framework</title>
-      <link>https://www.hilman.io/tags/grape-framework/</link>
-      <pubDate>Thu, 28 Jan 2016 23:26:39 -0500</pubDate>
-      
-      <guid>https://www.hilman.io/tags/grape-framework/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Javascript</title>
+      <title>javascript</title>
       <link>https://www.hilman.io/tags/javascript/</link>
       <pubDate>Sat, 25 Mar 2017 22:08:05 -0400</pubDate>
       
@@ -40,7 +18,7 @@
     </item>
     
     <item>
-      <title>Node.js</title>
+      <title>node.js</title>
       <link>https://www.hilman.io/tags/node.js/</link>
       <pubDate>Sat, 25 Mar 2017 22:08:05 -0400</pubDate>
       
@@ -49,7 +27,7 @@
     </item>
     
     <item>
-      <title>Programming</title>
+      <title>programming</title>
       <link>https://www.hilman.io/tags/programming/</link>
       <pubDate>Sat, 25 Mar 2017 22:08:05 -0400</pubDate>
       
@@ -58,16 +36,16 @@
     </item>
     
     <item>
-      <title>Rails</title>
-      <link>https://www.hilman.io/tags/rails/</link>
-      <pubDate>Sun, 13 Sep 2015 23:41:00 -0400</pubDate>
+      <title>typescript</title>
+      <link>https://www.hilman.io/tags/typescript/</link>
+      <pubDate>Sat, 25 Mar 2017 22:08:05 -0400</pubDate>
       
-      <guid>https://www.hilman.io/tags/rails/</guid>
+      <guid>https://www.hilman.io/tags/typescript/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Ruby</title>
+      <title>ruby</title>
       <link>https://www.hilman.io/tags/ruby/</link>
       <pubDate>Sun, 31 Jan 2016 21:07:34 -0500</pubDate>
       
@@ -76,11 +54,29 @@
     </item>
     
     <item>
-      <title>Typescript</title>
-      <link>https://www.hilman.io/tags/typescript/</link>
-      <pubDate>Sat, 25 Mar 2017 22:08:05 -0400</pubDate>
+      <title>grape-framework</title>
+      <link>https://www.hilman.io/tags/grape-framework/</link>
+      <pubDate>Thu, 28 Jan 2016 23:26:39 -0500</pubDate>
       
-      <guid>https://www.hilman.io/tags/typescript/</guid>
+      <guid>https://www.hilman.io/tags/grape-framework/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rails</title>
+      <link>https://www.hilman.io/tags/rails/</link>
+      <pubDate>Sun, 13 Sep 2015 23:41:00 -0400</pubDate>
+      
+      <guid>https://www.hilman.io/tags/rails/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://www.hilman.io/tags/git/</link>
+      <pubDate>Mon, 07 Sep 2015 20:15:26 -0400</pubDate>
+      
+      <guid>https://www.hilman.io/tags/git/</guid>
       <description></description>
     </item>
     

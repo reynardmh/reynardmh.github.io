@@ -1,130 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2017/03/test-context-builder/</loc>
-    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2017/03/db-fabricator-2.0/</loc>
-    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2017/01/db-fabricator/</loc>
-    <lastmod>2017-01-16T17:57:41-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2016/04/using-shared-examples-in-rspec/</loc>
-    <lastmod>2016-04-05T10:53:28-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2016/03/helper-print-out-activerecord-sql/</loc>
-    <lastmod>2016-03-15T19:56:54-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2016/01/tempfile/</loc>
-    <lastmod>2016-01-31T21:07:34-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2016/01/how-to-test-file-upload-grape/</loc>
-    <lastmod>2016-01-28T23:26:39-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2016/01/stop-using-backtick-to-run-shell-command-in-ruby/</loc>
-    <lastmod>2016-01-23T13:56:39-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/</loc>
-    <lastmod>2015-09-13T23:41:00-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</loc>
-    <lastmod>2015-09-07T20:15:26-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/about/</loc>
-  </url>
-  
   <url>
     <loc>https://www.hilman.io/blog/</loc>
     <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/git/</loc>
-    <lastmod>2015-09-07T20:15:26-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/grape-framework/</loc>
-    <lastmod>2016-01-28T23:26:39-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/javascript/</loc>
-    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/node.js/</loc>
-    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/programming/</loc>
-    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/rails/</loc>
-    <lastmod>2015-09-13T23:41:00-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/ruby/</loc>
-    <lastmod>2016-01-31T21:07:34-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/</loc>
-    <lastmod>2015-09-07T20:15:26-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.hilman.io/tags/typescript/</loc>
-    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.hilman.io/</loc>
     <lastmod>2017-03-25T22:08:05-04:00</lastmod>
-    <priority>0</priority>
+  </url><url>
+    <loc>https://www.hilman.io/tags/javascript/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/node.js/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/programming/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2017/03/test-context-builder/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/typescript/</loc>
+    <lastmod>2017-03-25T22:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2017/03/db-fabricator-2.0/</loc>
+    <lastmod>2017-03-12T17:08:05-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2017/01/db-fabricator/</loc>
+    <lastmod>2017-01-16T17:57:41-05:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2016/04/using-shared-examples-in-rspec/</loc>
+    <lastmod>2016-04-05T10:53:28-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2016/03/helper-print-out-activerecord-sql/</loc>
+    <lastmod>2016-03-15T19:56:54-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/ruby/</loc>
+    <lastmod>2016-01-31T21:07:34-05:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2016/01/tempfile/</loc>
+    <lastmod>2016-01-31T21:07:34-05:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/grape-framework/</loc>
+    <lastmod>2016-01-28T23:26:39-05:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2016/01/how-to-test-file-upload-grape/</loc>
+    <lastmod>2016-01-28T23:26:39-05:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2016/01/stop-using-backtick-to-run-shell-command-in-ruby/</loc>
+    <lastmod>2016-01-23T13:56:39-05:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/</loc>
+    <lastmod>2015-09-13T23:41:00-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/rails/</loc>
+    <lastmod>2015-09-13T23:41:00-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/tags/git/</loc>
+    <lastmod>2015-09-07T20:15:26-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/blog/2015/09/what-you-need-to-know-about-gitignore/</loc>
+    <lastmod>2015-09-07T20:15:26-04:00</lastmod>
+  </url><url>
+    <loc>https://www.hilman.io/about/</loc>
+  </url><url>
+    <loc>https://www.hilman.io/categories/</loc>
   </url>
-  
 </urlset>
